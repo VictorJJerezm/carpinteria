@@ -18,6 +18,7 @@ class UsuarioAdminSeeder extends Seeder
                 'contra' => Hash::make('VJJ291002*'),
                 'id_rol'     => $idRolAdmin,
                 'activo'     => true,
+                'telefono'   => '57181667',
             ]
         );
     }
