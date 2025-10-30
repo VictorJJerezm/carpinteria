@@ -574,3 +574,92 @@ input:focus, select:focus, textarea:focus{
   width: 100%;
   max-width: 520px; /* ancho cómodo del formulario */
 }
+
+/* ============ MOBILE FIRST TUNING ============ */
+/* 1) Tocar tokens para pantallas pequeñas */
+@media (max-width: 480px){
+  :root{
+    --pad: .9rem;
+    --radius: 12px;
+    --shadow: 0 4px 14px rgba(17,24,39,.07);
+  }
+  body{ line-height: 1.5; }
+  .container{ padding: 0 .85rem; }
+}
+
+/* 2) Tipografía y cabeceras más legibles en móvil */
+@media (max-width: 480px){
+  h1{ font-size: clamp(1.25rem, 5vw, 1.6rem); }
+  h2{ font-size: clamp(1.1rem, 4.5vw, 1.35rem); }
+  h3{ font-size: 1rem; }
+  .muted{ font-size: .95rem; }
+}
+
+/* 3) Navbar: compacta y desplazable si hay muchos enlaces */
+.navbar .row{ flex-wrap: wrap; }
+.navbar nav{ margin-left: 0; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+.navbar nav::-webkit-scrollbar{ display: none; }
+.navbar a{ padding:.55rem .75rem; }
+
+/* 4) Botones “tappable” (44px min según Apple HIG) */
+.btn{ min-height: 44px; font-size: 1rem; }
+@media (max-width: 480px){
+  .btn{ width: 100%; justify-content: center; } /* apila por defecto en móvil */
+  .form-actions{ flex-direction: column; align-items: stretch; }
+}
+
+/* 5) Formularios: inputs cómodos + espacios */
+@media (max-width: 480px){
+  label{ margin:.4rem 0 .35rem; }
+  input[type], select, textarea{
+    padding:.7rem .85rem;
+    font-size: 16px; /* evita zoom en iOS */
+  }
+  .form-row{ grid-template-columns: 1fr; gap: .85rem; }
+}
+
+/* 6) Cards: respiración y tamaños de thumb más prudentes */
+@media (max-width: 480px){
+  .card .card-body{ padding: calc(var(--pad) * .9); }
+  .product-card .thumb{ height: 150px; }
+  .thumb-mini{ width: 100%; height: 120px; }
+}
+
+/* 7) Tablas: modo responsive simple (scroll) + modo "stacked" opcional */
+.table-responsive{ width:100%; overflow-x:auto; -webkit-overflow-scrolling: touch; }
+.table-responsive .table{ box-shadow:none; border-radius: 10px; }
+
+/* “Stacked” sin cambiar Blade: oculta thead y muestra cabeceras con data-label en TD */
+@media (max-width: 640px){
+  .table.table-stacked thead{ display:none; }
+  .table.table-stacked, 
+  .table.table-stacked tbody, 
+  .table.table-stacked tr, 
+  .table.table-stacked td{ display:block; width:100%; }
+  .table.table-stacked tr{ border:1px solid var(--border); border-radius: 12px; padding:.5rem .75rem; margin-bottom:.65rem; background:#fff; }
+  .table.table-stacked td{ border:0; padding:.35rem 0; }
+  .table.table-stacked td::before{
+    content: attr(data-label);
+    display:block; 
+    font-weight:600; 
+    color:#6b7280; 
+    margin-bottom:.15rem;
+  }
+}
+
+/* 8) Modales: pantalla completa en móvil para evitar recortes */
+@media (max-width: 640px){
+  .modal-dialog{
+    width: 100%;
+    max-height: 92vh;
+    border-radius: 10px;
+  }
+}
+
+/* 9) Utilidades extra pensadas para móvil */
+.hide-mobile{ display: none !important; }
+@media (min-width: 641px){ .hide-mobile{ display: initial !important; } }
+
+.show-mobile{ display: initial !important; }
+@media (min-width: 641px){ .show-mobile{ display: none !important; } }
+
