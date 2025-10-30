@@ -12,10 +12,10 @@ class UsuarioAdminSeeder extends Seeder
         $idRolAdmin = DB::table('roles')->where('slug','admin')->value('id');
 
         DB::table('usuarios')->updateOrInsert(
-            ['correo' => 'admin@demo.com'], // clave única
+            ['correo' => 'vjerezmijangos@gmail.com'], // clave única
             [
-                'nombre'     => 'Admin Demo',
-                'contra' => Hash::make('Admin12345'),
+                'nombre'     => 'Victor Jerez',
+                'contra' => Hash::make('VJJ291002*'),
                 'id_rol'     => $idRolAdmin,
                 'activo'     => true,
             ]
