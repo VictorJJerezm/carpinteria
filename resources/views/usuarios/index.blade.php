@@ -60,7 +60,7 @@
               $estadoTxt = $u->activo ? 'Activo' : 'Inactivo';
             @endphp
             <tr>
-              <td data-label="#"> {{ $u->id }} </td>
+              <td data-label="#">{{ $u->id }}</td>
               <td data-label="Nombre">{{ $u->nombre }}</td>
               <td data-label="Correo" class="muted">{{ $u->correo }}</td>
               <td data-label="Rol">{{ $u->rol?->nombre ?? '—' }}</td>
