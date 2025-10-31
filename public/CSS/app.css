@@ -602,3 +602,66 @@ body{ overflow-x:hidden; }
     content:none;
   }
 }
+
+/* ===== NAVBAR: forzar 2 filas (links + auth) en móviles hasta 480px ===== */
+@media (max-width: 480px){
+  .navbar .row{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: .5rem;
+  }
+
+  /* Brand compacto para que no empuje el resto */
+  .navbar .brand{
+    flex: 0 0 auto;
+    font-size: 1rem;
+    max-width: 45vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* El separador no se usa en móvil */
+  .navbar .spacer{ display:none !important; }
+
+  /* El NAV ocupa su propia fila (100%) y hace scroll horizontal si no cabe */
+  .navbar nav{
+    order: 2;
+    flex: 0 0 100% !important;      /* 🔑 fuerza nueva fila */
+    margin-left: 0 !important;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    gap: .5rem;
+  }
+  .navbar nav::-webkit-scrollbar{ display:none; }
+  .navbar a{ padding:.38rem .5rem; font-size:.95rem; border-radius:9px; }
+
+  /* Bloque de autenticación SIEMPRE en otra fila y a todo lo ancho */
+  .navbar .nav-auth{
+    order: 3;
+    flex: 0 0 100% !important;      /* 🔑 fuerza nueva fila */
+    display: flex;
+    gap: .5rem;
+    margin-top: .25rem;
+  }
+  .navbar .nav-auth form{ display:flex; flex:1 1 0; }
+  .navbar .nav-auth a,
+  .navbar .nav-auth .btn{
+    flex: 1 1 0;
+    width: 100%;
+    min-height: 42px;
+    justify-content: center;
+    font-size: .95rem;
+  }
+}
+
+/* Anti-desbordes laterales residuales */
+body{ overflow-x: hidden; }
+
+@media (max-width:480px){
+  .table.cots tr.no-data td{ display:block; border:0; padding:.5rem 0; }
+  .table.cots tr.no-data td::before{ content:none; }
+}
