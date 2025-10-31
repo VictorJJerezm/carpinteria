@@ -7,48 +7,56 @@
 
 <div class="card mt-3">
   <div class="card-body">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>#</th><th>Fecha</th><th>Detalle</th><th>Estado</th><th>Total</th><th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        @forelse($cotizaciones as $c)
+    <div class="table-responsive">
+
+      <table class="table table-stacked">
+        <thead>
           <tr>
-            <td>{{ $c->id_cotizacion }}</td>
-            <td>{{ $c->fecha }}</td>
-            <td>
-              @foreach($c->detalles as $d)
+            <th>#</th>
+            <th>Fecha</th>
+            <th>Detalle</th>
+            <th>Estado</th>
+            <th>Total</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+        @forelse($cotizaciones as $c)
+          @php
+            $badgeCot = match($c->estado){
+              'Pendiente' => 'badge-warn',
+              'Respondida'=> 'badge-neutral',
+              'Aprobada'  => 'badge-ok',
+              'Rechazada','Cancelada' => 'badge-bad',
+              default     => 'badge-neutral'
+            };
+            $badgePed = match($c->pedido?->estado){
+              'En proceso' => 'badge-warn',
+              'Terminado'  => 'badge-neutral',
+              'Entregado'  => 'badge-ok',
+              default      => 'badge-neutral'
+            };
+          @endphp
+
+          <tr>
+            <td data-label="#">{{ $c->id_cotizacion }}</td>
+
+            <td data-label="Fecha">{{ $c->fecha }}</td>
+
+            <td data-label="Detalle">
+              @forelse($c->detalles as $d)
                 <div>
                   {{ $d->producto?->nombre }}
-                  @if($d->material) — <small class="muted">{{ $d->material->nombre }}</small> @endif
+                  @if($d->material) — <small class="muted">{{ $d->material->nombre }}</small>@endif
                   × {{ $d->cantidad }}
                 </div>
-              @endforeach
+              @empty
+                <span class="muted">Sin detalle</span>
+              @endforelse
             </td>
-            <td>
-              @php
-                $badgeCot = match($c->estado){
-                  'Pendiente' => 'badge-warn',
-                  'Respondida'=> 'badge-neutral',
-                  'Aprobada'  => 'badge-ok',
-                  'Rechazada' => 'badge-bad',
-                  'Cancelada' => 'badge-bad',
-                  default     => 'badge-neutral'
-                };
-                $badgePed = match($c->pedido?->estado){
-                  'En proceso' => 'badge-warn',
-                  'Terminado'  => 'badge-neutral',
-                  'Entregado'  => 'badge-ok',
-                  default      => 'badge-neutral'
-                };
-              @endphp
 
-              <div>
-                <span class="badge {{ $badgeCot }}">{{ $c->estado }}</span>
-              </div>
-
+            <td data-label="Estado">
+              <div><span class="badge {{ $badgeCot }}">{{ $c->estado }}</span></div>
               @if($c->pedido)
                 <div class="mt-1">
                   <small class="muted">Pedido:</small>
@@ -56,7 +64,8 @@
                 </div>
               @endif
             </td>
-            <td>
+
+            <td data-label="Total">
               @if(!is_null($c->precio_final))
                 <strong>Q {{ number_format($c->precio_final,2) }}</strong>
                 @if(!is_null($c->tiempo_estimado_dias))
@@ -66,7 +75,8 @@
                 <span class="muted">A definir</span>
               @endif
             </td>
-            <td class="actions">
+
+            <td data-label="Acciones" class="actions">
               @if($c->estado === 'Respondida')
                 <form method="POST" action="{{ route('cliente.cotizaciones.aceptar',$c->id_cotizacion) }}" style="display:inline" onsubmit="return confirm('¿Aceptar respuesta?')">
                   @csrf
@@ -77,15 +87,16 @@
                   <button class="btn btn-secondary btn-sm" type="submit">Rechazar</button>
                 </form>
               @else
-                —
+                <span class="muted">—</span>
               @endif
             </td>
           </tr>
         @empty
           <tr><td colspan="6">Aún no tienes cotizaciones.</td></tr>
         @endforelse
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 @endsection
