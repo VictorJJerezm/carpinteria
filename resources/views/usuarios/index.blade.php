@@ -92,6 +92,17 @@
         </tbody>
       </table>
     </div>
+    <div class="mt-2">
+      {{-- Info tipo: “Mostrando 1–8 de 24 usuarios” --}}
+      @if($users->total() > 0)
+        <p class="muted" style="margin-bottom:.5rem">
+          Mostrando {{ $users->firstItem() }}–{{ $users->lastItem() }} de {{ $users->total() }} usuarios
+        </p>
+      @endif
+
+      {{-- Links de paginación --}}
+      {{ $users->links() }}
+    </div>
   </div>
 </div>
 @endsection

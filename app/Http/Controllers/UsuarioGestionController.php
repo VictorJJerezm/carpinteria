@@ -25,7 +25,8 @@ class UsuarioGestionController extends Controller
             ->when($rol !== '', fn($qq) => $qq->where('id_rol', $rol))
             ->when($estado !== '', fn($qq) => $qq->where('activo', $estado === 'Activo'))
             ->orderBy('nombre')
-            ->get();
+            ->paginate(8)
+            ->withQueryString();
 
         $roles = $this->rolesAsignables(); // para filtro y formulario
         return view('usuarios.index', compact('users','roles','q','rol','estado'));
