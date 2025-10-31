@@ -767,3 +767,49 @@ body{ overflow-x: hidden; }
 
 /* Anti-desbordes laterales residuales */
 body{ overflow-x:hidden; }
+
+/* ---- Mis Cotizaciones (móvil <=480px) ---- */
+.table-responsive{ width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+
+@media (max-width: 480px){
+  .table.cots thead{ display:none; }
+  .table.cots, .table.cots tbody, .table.cots tr, .table.cots td{
+    display:block; width:100%;
+  }
+  .table.cots tr{
+    background:#fff;
+    border:1px solid var(--border, #e5e7eb);
+    border-radius:12px;
+    padding:.6rem .8rem;
+    margin:0 0 .75rem;
+    box-shadow: var(--shadow, 0 6px 18px rgba(17,24,39,.06));
+  }
+  .table.cots td{
+    padding:.35rem 0;
+    word-break: break-word;
+  }
+  .table.cots td::before{
+    content: attr(data-label);
+    display:block;
+    font-weight:600;
+    color:#6b7280;
+    margin-bottom:.15rem;
+  }
+
+  /* acciones táctiles a ancho completo */
+  .table.cots td.actions{
+    padding-top:.5rem;
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:.4rem;
+  }
+  .table.cots td.actions .btn{
+    width:100%;
+    min-height:44px;
+    font-size:1rem;
+  }
+
+  /* si quieres ocultar la columna "#" en móvil, descomenta:
+  .table.cots td[data-label="#"]{ display:none; }
+  */
+}

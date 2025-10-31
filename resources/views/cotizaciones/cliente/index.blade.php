@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('contenido')
 <h1>Mis cotizaciones</h1>
 
@@ -8,8 +9,7 @@
 <div class="card mt-3">
   <div class="card-body">
     <div class="table-responsive">
-
-      <table class="table cots">
+      <table class="table cots" aria-label="Listado de cotizaciones del cliente">
         <thead>
           <tr>
             <th>#</th>
