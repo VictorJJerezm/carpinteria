@@ -307,19 +307,3 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
 .show-mobile{ display:initial !important; }
 @media (min-width:641px){ .show-mobile{ display:none !important; } }
 
-/* ======= FIX: visibilidad del menú móvil ======= */
-
-/* Por defecto el botón ☰ Menú no se muestra */
-.show-mobile {
-  display: none !important;
-}
-
-/* En pantallas pequeñas (≤640px) sí se muestra */
-@media (max-width: 640px) {
-  .show-mobile {
-    display: block !important;
-  }
-  .hide-mobile {
-    display: none !important;
-  }
-}
