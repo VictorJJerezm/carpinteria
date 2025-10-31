@@ -856,3 +856,40 @@ body{ overflow-x:hidden; }
 }
 
 .table-scroll td[data-label="Detalle"]{ max-width: 320px; white-space: normal; }
+
+/* ===== Scroll horizontal para tablas (funciona con tu <div class="table-responsive">) */
+.table-responsive{
+  width:100%;
+  display:block;
+  overflow-x: auto !important;          /* <- fuerza barra horizontal */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable both-edges;  /* mejor estilo de barra */
+}
+.table-responsive > table{
+  min-width: 880px;    /* súbelo/bájalo según tus columnas */
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.table-responsive th,
+.table-responsive td{
+  white-space: nowrap;                   /* evita que se encoja */
+}
+.table-responsive td[data-label="Detalle"]{
+  white-space: normal;                   /* solo el detalle puede partirse */
+}
+
+/* (Opcional) pista visual de que hay más contenido a la derecha */
+.table-responsive.scrollable::after{
+  content: "desliza →";
+  position: sticky;
+  right: 0;
+  bottom: 0;
+  margin: .25rem;
+  padding: .15rem .45rem;
+  font-size: .75rem;
+  color: #6b7280;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
