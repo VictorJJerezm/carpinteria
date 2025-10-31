@@ -914,3 +914,48 @@ body{ overflow-x:hidden; }
 }
 
 .table-responsive > table{ min-width: 960px; } /* o 1024px si tienes muchas columnas */
+
+
+/*--------------------------------*/
+
+/* 📱 Ajuste catálogo en móviles */
+@media (max-width: 640px) {
+  /* 1) Cards más compactas y centradas */
+  .product-card {
+    max-width: 280px;        /* ↓ tamaño del recuadro */
+    margin: 0 auto 16px;     /* centrado + separación */
+    border-radius: 16px;
+  }
+
+  /* 2) Imagen controlada (cuadrada y recortada) */
+  .product-card .thumb {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;     /* hace el recuadro cuadrado */
+    overflow: hidden;
+    border-radius: 12px;
+  }
+  .product-card .thumb img,
+  .product-card img.thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;       /* evita que la imagen “estire” */
+    display: block;
+  }
+
+  /* 3) Tipografías y paddings más pequeños */
+  .product-card .card-body { padding: 12px; }
+  .product-card .card-title { font-size: 1rem; }
+  .product-card .muted { font-size: .9rem; }
+}
+
+/* 🧩 (Opcional) Si quieres 2 productos por fila en móviles */
+@media (max-width: 640px) {
+  .grid.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  /* Al usar 2 columnas, quita límite estricto para que fluya */
+  .grid.grid-3 .product-card { max-width: none; margin: 0; }
+}
