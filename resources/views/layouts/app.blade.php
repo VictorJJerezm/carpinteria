@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>{{ config('app.name', 'Carpintería') }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ filemtime(public_path('css/app.css')) }}">
+  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
