@@ -78,18 +78,19 @@
 
     <div class="spacer"></div>
 
-    @auth
-      <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit" class="btn btn-secondary btn-sm">Salir</button>
-      </form>
-    @endauth
+    <div class="nav-auth">
+      @auth
+        <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <button type="submit" class="btn btn-secondary btn-sm">Salir</button>
+        </form>
+      @endauth
 
-    @guest
-      <a href="{{ route('register') }}" class="btn btn-secondary btn-sm">Crear cuenta</a>
-      <a href="{{ route('login') }}" class="btn btn-primary btn-sm">Ingresar</a>
-    @endguest
-  </div>
+      @guest
+        <a href="{{ route('register') }}" class="btn btn-secondary btn-sm">Crear cuenta</a>
+        <a href="{{ route('login') }}" class="btn btn-primary btn-sm">Ingresar</a>
+      @endguest
+    </div>
 </header>
 
 <main class="section">

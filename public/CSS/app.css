@@ -399,3 +399,54 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
   nav a[data-short]{ position:relative; }
   nav a[data-short] > *{ visibility: hidden; } /* oculta el texto real */
 }
+
+/* ========= NAV + TABLAS AJUSTE 360px ========= */
+@media (max-width: 380px){
+  /* Navbar más compacta */
+  .navbar .row{ gap:.4rem; }
+  .navbar .brand{
+    font-size: 1rem;
+    max-width: 42vw;                 /* que no empuje al resto */
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .navbar nav{
+    margin-left:.35rem;
+    gap:.45rem;
+    overflow-x:auto;                  /* ya lo tienes, lo reforzamos */
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    white-space:nowrap;
+  }
+  .navbar nav::-webkit-scrollbar{ display:none; }
+  .navbar a{ padding:.38rem .5rem; font-size:.95rem; border-radius:9px; }
+
+  /* Botón Salir / Crear / Ingresar: pasa abajo para no cortar el menú */
+  .navbar .nav-auth{
+    order: 3;                         /* coloca el bloque al final */
+    width: 100%;
+    margin-top: .25rem;
+    display: flex;
+    gap: .4rem;
+  }
+  .navbar .nav-auth .btn{
+    flex: 1 1 0;                      /* se reparten el ancho */
+    min-height: 40px;
+    font-size: .95rem;
+    justify-content: center;
+  }
+  .navbar .spacer{ display:none; }    /* no necesitamos el espacio en móvil */
+}
+
+/* Tablas: en 360 mejor con desplazamiento lateral */
+@media (max-width: 380px){
+  .table-responsive{ overflow-x:auto; }
+  .table{
+    min-width: 560px;                 /* fuerza scroll si hay muchas columnas */
+  }
+  .table th, .table td{
+    padding:.52rem .55rem;
+    font-size:.92rem;
+  }
+  .table .actions{ gap:.3rem; flex-wrap:wrap; }
+  .table .actions .btn{ flex:1 1 auto; }
+}
