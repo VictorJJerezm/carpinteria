@@ -307,3 +307,84 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
 .show-mobile{ display:initial !important; }
 @media (min-width:641px){ .show-mobile{ display:none !important; } }
 
+
+/* ===== Micro-breakpoints para teléfonos estrechos ===== */
+
+/* 1) Teléfonos ≤ 380px (S25 en modo “360px”) */
+@media (max-width: 380px){
+
+  /* Tokens + respiración */
+  :root{
+    --pad: .75rem;
+    --radius: 10px;
+    --shadow: 0 3px 10px rgba(17,24,39,.07);
+  }
+  .container{ padding: 0 .6rem; }
+
+  /* Navbar más compacta y segura */
+  .navbar .brand{
+    font-size: 1rem;
+    letter-spacing: .1px;
+    max-width: 40vw;            /* evita que el texto empuje al menú */
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .navbar nav{ gap: .4rem; margin-left: .5rem; }
+  .navbar a{ padding: .45rem .5rem; font-size: .95rem; }
+
+  /* Titulares más pequeños */
+  h1{ font-size: clamp(1.15rem, 6vw, 1.4rem); }
+  h2{ font-size: clamp(1.0rem, 5vw, 1.2rem); }
+  h3{ font-size: .95rem; }
+
+  /* Botones e inputs */
+  .btn{
+    min-height: 40px;
+    font-size: .95rem;
+    padding: .5rem .7rem;
+  }
+  input[type], select, textarea{
+    padding: .65rem .75rem;
+    font-size: 16px; /* iOS no hace zoom */
+  }
+  .form-row{ grid-template-columns: 1fr; gap: .75rem; }
+  .form-actions{ flex-direction: column; align-items: stretch; }
+
+  /* Tarjetas */
+  .card .card-body{ padding: calc(var(--pad) * .9); }
+
+  /* Tablas compactas */
+  .table th, .table td{
+    padding: .55rem .6rem;
+    font-size: .95rem;
+    word-break: break-word;      /* correos largos */
+  }
+  .table .actions{
+    gap: .3rem;
+    flex-wrap: wrap;             /* para que no se desborde */
+  }
+  .table .actions .btn{
+    flex: 1 1 auto;              /* que puedan ocupar ancho si hace falta */
+  }
+
+  /* Dropdowns que no se salgan */
+  .dropdown-menu{
+    max-width: calc(100vw - 1.2rem);
+    left: 0;
+    right: auto;
+  }
+
+  /* Stacked mode más legible en super estrecho (si lo usas) */
+  .table.table-stacked td{
+    padding: .3rem 0;
+  }
+  .table.table-stacked td::before{
+    margin-bottom: .1rem;
+  }
+}
+
+/* 2) Ultra-estrechos ≤ 340px (por si acaso) */
+@media (max-width: 340px){
+  .navbar a{ padding: .4rem .45rem; font-size: .9rem; }
+  .btn{ min-height: 38px; font-size: .9rem; padding: .45rem .6rem; }
+  .table th, .table td{ padding: .5rem .55rem; font-size: .9rem; }
+}
