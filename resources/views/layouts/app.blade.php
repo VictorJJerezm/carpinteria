@@ -13,14 +13,7 @@
   <div class="container row">
     <a class="brand" href="{{ route('catalogo.index') }}">Carpintería</a>
 
-    <!-- Botón menú móvil
-    <button id="navToggle" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav">
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-    </button> -->
-
-   <nav id="mainNav" class="main-nav">
+   <nav>
     {{-- Público / todos --}}
     <a href="{{ route('catalogo.index') }}" class="{{ request()->routeIs('catalogo.index') ? 'active' : '' }}">Catálogo</a>
 
@@ -111,39 +104,5 @@
 <footer class="footer">
   <div class="container muted">© {{ date('Y') }} Carpintería — Gestión y cotizaciones</div>
 </footer>
-<!-- <script>
-  // Toggle menú móvil
-  document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById('navToggle');
-    const nav = document.getElementById('mainNav');
-
-    if (btn && nav) {
-      btn.addEventListener('click', () => {
-        const isOpen = nav.classList.toggle('open');
-        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        document.body.classList.toggle('nav-open', isOpen);
-      });
-      // Cierra el menú al hacer tap en un enlace
-      nav.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-          nav.classList.remove('open');
-          document.body.classList.remove('nav-open');
-          btn.setAttribute('aria-expanded', 'false');
-        });
-      });
-    }
-
-    // Comportamiento exclusivo de un <details> abierto a la vez (ya lo tenías)
-    document.querySelectorAll("details.dropdown").forEach((el) => {
-      el.addEventListener("toggle", () => {
-        if (el.open) {
-          document.querySelectorAll("details.dropdown").forEach((other) => {
-            if (other !== el) other.removeAttribute("open");
-          });
-        }
-      });
-    });
-  });
-</script> -->
 </body>
 </html>
