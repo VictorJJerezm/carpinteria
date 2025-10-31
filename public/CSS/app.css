@@ -546,3 +546,59 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
     padding: .35rem 0 !important;
   }
 }
+
+/* ===== NAV: forzar filas separadas en ≤380px ===== */
+@media (max-width:380px){
+  .navbar .row{ display:flex; flex-wrap:wrap; align-items:flex-start; gap:.4rem; }
+  .navbar .brand{ flex:0 0 auto; font-size:1rem; max-width:42vw; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .navbar .spacer{ display:none !important; }
+
+  /* NAV ocupa una fila completa y hace scroll si no cabe */
+  .navbar nav{
+    order:2; flex:0 0 100% !important; margin-left:0 !important; max-width:100%;
+    overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; gap:.45rem;
+  }
+  .navbar nav::-webkit-scrollbar{ display:none; }
+  .navbar a{ padding:.38rem .5rem; font-size:.95rem; border-radius:9px; }
+
+  /* BLOQUE AUTH SIEMPRE EN SU PROPIA FILA (1 o 2 botones) */
+  .navbar .nav-auth{
+    order:3; flex:0 0 100% !important; display:flex; gap:.4rem; margin-top:.25rem;
+  }
+  .navbar .nav-auth form{ display:flex; flex:1 1 0; }
+  .navbar .nav-auth a, .navbar .nav-auth .btn{
+    flex:1 1 0; width:100%; min-height:40px; justify-content:center; font-size:.95rem;
+  }
+}
+
+/* ===== TABLA de cotizaciones: “stacked” automático en ≤400px ===== */
+/* No necesitas data-label; colocamos los títulos con nth-child */
+@media (max-width:400px){
+  .table.cots thead{ display:none; }
+  .table.cots, .table.cots tbody, .table.cots tr, .table.cots td{ display:block; width:100%; }
+  .table.cots tr{ border:1px solid var(--border); border-radius:12px; padding:.5rem .75rem; margin-bottom:.65rem; background:#fff; }
+  .table.cots td{ border:0; padding:.35rem 0; display:flex; justify-content:space-between; border-bottom:1px solid #f0f0f0; }
+  .table.cots td:last-child{ border-bottom:none; }
+  .table.cots td::before{ font-weight:600; color:#6b7280; margin-right:.75rem; content:""; }
+  .table.cots td:nth-child(1)::before{ content:"#"; }
+  .table.cots td:nth-child(2)::before{ content:"Fecha"; }
+  .table.cots td:nth-child(3)::before{ content:"Detalle"; }
+  .table.cots td:nth-child(4)::before{ content:"Estado"; }
+  .table.cots td:nth-child(5)::before{ content:"Total"; }
+  .table.cots td:nth-child(6)::before{ content:"Acciones"; }
+  .table.cots .actions{ flex-direction:column; gap:.3rem; }
+}
+
+/* Evita cualquier desbordamiento lateral residual */
+body{ overflow-x:hidden; }
+
+@media (max-width:400px){
+  .table.cots tr.no-data td{
+    display:block;
+    border:0;
+    padding:.5rem 0;
+  }
+  .table.cots tr.no-data td::before{
+    content:none;
+  }
+}

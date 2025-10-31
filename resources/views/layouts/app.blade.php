@@ -91,6 +91,7 @@
         <a href="{{ route('login') }}" class="btn btn-primary btn-sm">Ingresar</a>
       @endguest
     </div>
+  <div class="nav-auth">...</div>  
 </header>
 
 <main class="section">

@@ -9,7 +9,7 @@
   <div class="card-body">
     <div class="table-responsive">
 
-      <table class="table table-stacked">
+      <table class="table cots">
         <thead>
           <tr>
             <th>#</th>
@@ -92,7 +92,7 @@
             </td>
           </tr>
         @empty
-          <tr><td colspan="6">Aún no tienes cotizaciones.</td></tr>
+          <tr class="no-data"><td colspan="6">Aún no tienes cotizaciones.</td></tr>
         @endforelse
         </tbody>
       </table>
