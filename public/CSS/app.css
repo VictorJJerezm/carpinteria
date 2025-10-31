@@ -665,3 +665,105 @@ body{ overflow-x: hidden; }
   .table.cots tr.no-data td{ display:block; border:0; padding:.5rem 0; }
   .table.cots tr.no-data td::before{ content:none; }
 }
+
+/* ===== NAVBAR: 2 filas (enlaces + auth) hasta 480px ===== */
+@media (max-width: 480px){
+  .navbar .row{
+    display:flex;
+    flex-wrap:wrap;                /* permite saltos de fila */
+    align-items:flex-start;
+    gap:.5rem;
+  }
+
+  .navbar .brand{
+    flex:0 0 auto;
+    font-size:1rem;
+    max-width:45vw;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .navbar .spacer{ display:none !important; }
+
+  /* 1) NAV ocupa una fila completa y hace scroll lateral si no cabe */
+  .navbar nav{
+    order:2;
+    flex:0 0 100% !important;      /* 🔑 fuerza nueva fila */
+    margin-left:0 !important;
+    max-width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    white-space:nowrap;
+    gap:.5rem;
+  }
+  .navbar nav::-webkit-scrollbar{ display:none; }
+  .navbar a{ padding:.38rem .5rem; font-size:.95rem; border-radius:9px; }
+
+  /* 2) AUTH siempre en otra fila y ocupando 100% */
+  .navbar .nav-auth{
+    order:3;
+    flex:0 0 100% !important;      /* 🔑 fila completa sí o sí */
+    display:flex;
+    gap:.5rem;
+    margin-top:.25rem;
+  }
+  .navbar .nav-auth form{ display:flex; flex:1 1 0; }
+  .navbar .nav-auth a,
+  .navbar .nav-auth .btn{
+    flex:1 1 0;
+    width:100%;
+    min-height:42px;
+    justify-content:center;
+    font-size:.95rem;
+  }
+}
+
+/* En desktop vuelve a su comportamiento normal */
+@media (min-width: 769px){
+  .navbar .nav-auth{ order:initial; flex:0 0 auto; }
+}
+
+/* ===== COTIZACIONES: modo “tarjeta” en móvil (≤480px) ===== */
+/* No hace falta tocar Blade: usamos nth-child para nombrar campos */
+@media (max-width: 480px){
+  .table.cots thead{ display:none; }
+  .table.cots, .table.cots tbody, .table.cots tr, .table.cots td{
+    display:block; width:100%;
+  }
+  .table.cots tr{
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:.5rem .75rem;
+    margin-bottom:.65rem;
+    background:#fff;
+  }
+  .table.cots td{
+    border:0;
+    padding:.35rem 0;
+    display:flex;
+    justify-content:space-between;
+    border-bottom:1px solid #f0f0f0;
+  }
+  .table.cots td:last-child{ border-bottom:none; }
+
+  .table.cots td::before{
+    font-weight:600; color:#6b7280; margin-right:.75rem; content:"";
+  }
+  .table.cots td:nth-child(1)::before{ content:"#"; }
+  .table.cots td:nth-child(2)::before{ content:"Fecha"; }
+  .table.cots td:nth-child(3)::before{ content:"Detalle"; }
+  .table.cots td:nth-child(4)::before{ content:"Estado"; }
+  .table.cots td:nth-child(5)::before{ content:"Total"; }
+  .table.cots td:nth-child(6)::before{ content:"Acciones"; }
+
+  /* Botones de acciones apilados */
+  .table.cots .actions{ flex-direction:column; gap:.3rem; }
+
+  /* Fila “sin datos” sin etiqueta */
+  .table.cots tr.no-data td{ display:block; border:0; padding:.5rem 0; }
+  .table.cots tr.no-data td::before{ content:none; }
+}
+
+/* Anti-desbordes laterales residuales */
+body{ overflow-x:hidden; }
