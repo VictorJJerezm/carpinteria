@@ -813,3 +813,46 @@ body{ overflow-x:hidden; }
   .table.cots td[data-label="#"]{ display:none; }
   */
 }
+
+/* ===== Tabla con scroll horizontal en pantallas pequeñas ===== */
+.table-scroll{
+  width: 100%;
+  overflow-x: auto;                /* <- barra horizontal */
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+  background: transparent;
+}
+
+/* Asegura que la tabla tenga un ancho mínimo “de escritorio” */
+.table-scroll > table{
+  min-width: 760px;                /* ajusta si necesitas más/menos */
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* Que las celdas no se rompan raro al hacer scroll */
+.table-scroll th,
+.table-scroll td{
+  white-space: nowrap;             /* títulos y números en una línea */
+}
+.table-scroll td[data-label="Detalle"]{
+  white-space: normal;             /* el detalle sí puede partirse */
+}
+
+/* Opcional: header fijo mientras haces scroll horizontal */
+@media (max-width: 768px){
+  .table-scroll thead th{
+    position: sticky;
+    top: 0;
+    background: #fff7f0;          /* mismo tono que tu header de tabla */
+    z-index: 1;
+  }
+}
+
+/* Botón “Salir” mejor alineado en móvil */
+@media (max-width: 480px){
+  .nav-auth{ width:100%; display:flex; justify-content:flex-end; padding:.25rem .25rem 0; }
+  .nav-auth .btn{ min-height:40px; }
+}
+
+.table-scroll td[data-label="Detalle"]{ max-width: 320px; white-space: normal; }
