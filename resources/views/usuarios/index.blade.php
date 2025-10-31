@@ -41,6 +41,7 @@
 
 <div class="card mt-2">
   <div class="card-body">
+    <div class="table-responsive">
     <table class="table">
       <thead>
         <tr>
@@ -85,6 +86,7 @@
         @endforelse
       </tbody>
     </table>
+    </div>
   </div>
 </div>
 @endsection

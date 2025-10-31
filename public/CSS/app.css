@@ -663,3 +663,34 @@ input:focus, select:focus, textarea:focus{
 .show-mobile{ display: initial !important; }
 @media (min-width: 641px){ .show-mobile{ display: none !important; } }
 
+/* Navbar: que nunca rompa el layout en móvil */
+.navbar { overflow: hidden; }
+.navbar .row { flex-wrap: wrap; }                    /* ya lo tienes, reafirmamos */
+.navbar nav {
+  margin-left: 0;
+  overflow-x: auto;                                  /* scroll horizontal si no cabe */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  white-space: nowrap;                                /* que no haga salto raro */
+}
+.navbar nav::-webkit-scrollbar{ display: none; }
+
+@media (max-width: 480px){
+  .navbar a { padding: .5rem .6rem; }
+}
+
+/* Dropdown: que el menú no se salga en móviles */
+.dropdown-menu{
+  max-width: calc(100vw - 2rem);
+  overflow-x: auto;
+}
+
+/* Mejor lectura de celdas en móvil */
+.table td, .table th{
+  word-break: break-word;
+}
+
+@media (max-width: 480px){
+  .form-actions{ flex-direction: column; align-items: stretch; }
+  .btn{ width: 100%; }
+}
