@@ -451,30 +451,52 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
   .table .actions .btn{ flex:1 1 auto; }
 }
 
-/* ======== FIX navbar en pantallas ~360px ======== */
+/* ====== FIX definitivo navbar 360px ====== */
 @media (max-width: 380px){
-  .navbar .row{ 
-    gap: .4rem;
-    align-items: flex-start;       /* evita que el botón flote verticalmente */
+  .navbar .row{
+    display: flex;
     flex-wrap: wrap;
+    align-items: flex-start;
+    gap: .4rem;
   }
 
-  .navbar .spacer{ display: none; }/* no necesitamos separador en móvil */
+  /* 1) Brand queda a la izquierda, tamaño compacto */
+  .navbar .brand{
+    flex: 0 0 auto;
+    font-size: 1rem;
+    max-width: 42vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-  /* Bloque de botones de sesión SIEMPRE ocupa su propia fila */
+  /* 2) NAV ocupa su propia fila (100%) y hace scroll horizontal si no cabe */
+  .navbar nav{
+    order: 2;
+    flex: 0 0 100% !important;   /* fuerza nueva fila */
+    margin-left: 0 !important;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    gap: .45rem;
+  }
+  .navbar nav::-webkit-scrollbar{ display:none; }
+  .navbar a{ padding:.38rem .5rem; font-size:.95rem; border-radius:9px; }
+
+  /* 3) Bloque de sesión SIEMPRE en una fila completa debajo del nav */
+  .navbar .spacer{ display: none !important; }
   .navbar .nav-auth{
-    order: 3;                      /* lo manda debajo del nav */
-    flex: 0 0 100%;                /* fuerza ancho completo de fila */
+    order: 3;
+    flex: 0 0 100% !important;   /* fila nueva */
     display: flex;
     gap: .4rem;
     margin-top: .25rem;
   }
-
-  /* Hace que funcione igual con 1 o 2 botones */
-  .navbar .nav-auth form{ flex: 1 1 0; display: flex; }
+  .navbar .nav-auth form{ display:flex; flex:1 1 0; }
   .navbar .nav-auth a,
   .navbar .nav-auth .btn{
-    flex: 1 1 0;                   /* que llenen el ancho disponible */
+    flex: 1 1 0;
     width: 100%;
     min-height: 40px;
     justify-content: center;
