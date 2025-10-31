@@ -388,3 +388,14 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
   .btn{ min-height: 38px; font-size: .9rem; padding: .45rem .6rem; }
   .table th, .table td{ padding: .5rem .55rem; font-size: .9rem; }
 }
+
+/* Abreviaturas automáticas en nav para ≤380px */
+@media (max-width: 380px){
+  nav a[href$="usuarios"]::after{ content:"Usuarios"; }
+  nav a[href$="usuarios"]{ font-size:.95rem; }
+
+  /* Ejemplos con data-attrs para no depender de href */
+  nav a[data-short]::after{ content: attr(data-short); }
+  nav a[data-short]{ position:relative; }
+  nav a[data-short] > *{ visibility: hidden; } /* oculta el texto real */
+}
