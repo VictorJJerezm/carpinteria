@@ -893,3 +893,24 @@ body{ overflow-x:hidden; }
   border-radius: 1rem;
   box-shadow: 0 2px 8px rgba(0,0,0,.06);
 }
+
+.table-responsive{
+  width:100%;
+  display:block;
+  overflow-x:auto !important;
+  -webkit-overflow-scrolling:touch;
+}
+.table-responsive > table{ min-width: 880px; }
+.table-responsive th, .table-responsive td{ white-space: nowrap; }
+.table-responsive td[data-label="Detalle"]{ white-space: normal; }
+
+/* opcional: avisito “desliza →” cuando haya overflow */
+.table-responsive.scrollable::after{
+  content: "desliza →";
+  position: sticky; right: .25rem; bottom: .25rem;
+  font-size:.75rem; color:#6b7280;
+  background:#fff; border:1px solid #e5e7eb; border-radius:1rem;
+  padding:.15rem .45rem; box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+.table-responsive > table{ min-width: 960px; } /* o 1024px si tienes muchas columnas */
