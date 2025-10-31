@@ -13,12 +13,12 @@
   <div class="container row">
     <a class="brand" href="{{ route('catalogo.index') }}">Carpintería</a>
 
-    <!-- Botón menú móvil -->
+    <!-- Botón menú móvil
     <button id="navToggle" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav">
       <span class="nav-toggle-bar"></span>
       <span class="nav-toggle-bar"></span>
       <span class="nav-toggle-bar"></span>
-    </button>
+    </button> -->
 
    <nav id="mainNav" class="main-nav">
     {{-- Público / todos --}}
@@ -111,7 +111,7 @@
 <footer class="footer">
   <div class="container muted">© {{ date('Y') }} Carpintería — Gestión y cotizaciones</div>
 </footer>
-<script>
+<!-- <script>
   // Toggle menú móvil
   document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById('navToggle');
@@ -144,6 +144,6 @@
       });
     });
   });
-</script>
+</script> -->
 </body>
 </html>
