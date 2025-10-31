@@ -8,7 +8,7 @@
 
 <div class="card mt-3">
   <div class="card-body">
-    <div class="table-scroll">
+    <div class="table-responsive">
       <table class="table cots" aria-label="Listado de cotizaciones del cliente">
         <thead>
           <tr>
