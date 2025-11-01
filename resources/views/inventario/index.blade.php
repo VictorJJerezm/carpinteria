@@ -5,6 +5,52 @@
 @if(session('ok')) <div class="alert alert-ok mt-2">{{ session('ok') }}</div> @endif
 @if($errors->any()) <div class="alert alert-bad mt-2">{{ $errors->first() }}</div> @endif
 
+<div class="card mt-2">
+  <div class="card-body">
+    <form method="GET" class="form-row">
+      <div><label>Buscar</label><input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nombre o descripción"></div>
+      <div>
+        <label>Categoría</label>
+        <select name="categoria">
+          <option value="">— Todas —</option>
+          @foreach($categorias as $c)
+            <option value="{{ $c }}" {{ ($categoria ?? '')===$c ? 'selected' : '' }}>
+              {{ ucfirst($c) }}
+            </option>
+          @endforeach
+        </select>
+      </div>
+      <div><label>Estado</label>
+        <select name="estado">
+          <option value="">— Todos —</option>
+          <option value="Activo"   {{ ($estado ?? '')==='Activo'?'selected':'' }}>Activo</option>
+          <option value="Inactivo" {{ ($estado ?? '')==='Inactivo'?'selected':'' }}>Inactivo</option>
+        </select>
+      </div>
+      <div><label>Stock</label>
+        <select name="stock">
+          <option value="">— Todos —</option>
+          <option value="bajo"   {{ ($stock ?? '')==='bajo'?'selected':'' }}>Bajo (&lt; 5)</option>
+          <option value="normal" {{ ($stock ?? '')==='normal'?'selected':'' }}>Normal (≥ 5)</option>
+        </select>
+      </div>
+      <div><label>Desde</label><input type="date" name="desde" value="{{ $desde ?? '' }}"></div>
+      <div><label>Hasta</label><input type="date" name="hasta" value="{{ $hasta ?? '' }}"></div>
+      <div><label>Por página</label>
+        <select name="pp">
+          @foreach([8,12,16,24] as $x)
+            <option value="{{ $x }}" {{ (int)($pp ?? 8)===$x?'selected':'' }}>{{ $x }}</option>
+          @endforeach
+        </select>
+      </div>
+      <div class="items-end flex">
+        <button class="btn btn-secondary btn-sm" type="submit">Filtrar</button>
+      </div>
+      <a class="btn btn-sm" href="{{ route('inventario.index') }}">Limpiar filtros</a>
+    </form>
+  </div>  
+</div>
+
 <div class="card mt-3">
   <div class="card-body">
     <table class="table">
@@ -51,6 +97,14 @@
         @endforelse
       </tbody>
     </table>
+    @if($insumos->total() > 0)
+      <p class="muted mt-2" style="margin-bottom:.5rem">
+        Mostrando {{ $insumos->firstItem() }}–{{ $insumos->lastItem() }} de {{ $insumos->total() }} registros
+      </p>
+    @endif
+    <div class="pagination-compact">
+      {{ $insumos->onEachSide(1)->links() }}
+    </div>
   </div>
 </div>
 
@@ -60,24 +114,30 @@
 
     <div class="form-row" style="align-items:flex-end">
       <div>
-        <label>Filtrar por insumo</label>
-        <form method="GET" action="{{ route('inventario.index') }}" class="form-row">
-          <select name="insumo" onchange="this.form.submit()">
-            <option value="0">— Todos —</option>
-            @foreach($insumosFiltro as $inf)
-              <option value="{{ $inf->id_insumo }}" {{ (int)$insumoSel===(int)$inf->id_insumo ? 'selected':'' }}>
-                {{ $inf->nombre }}
-              </option>
-            @endforeach
-          </select>
-          <label style="margin-left:1rem">Mostrar</label>
-          <select name="limite" onchange="this.form.submit()">
-            @foreach([5,10,25,50,100] as $n)
-              <option value="{{ $n }}" {{ (int)$limite===$n ? 'selected':'' }}>{{ $n }}</option>
-            @endforeach
-          </select>
+        <form method="GET" action="{{ route('inventario.index') }}" class="form-row" style="align-items:flex-end">
+          <div>
+            <label>Filtrar por insumo</label>
+            <select name="insumo" onchange="this.form.submit()">
+              <option value="0">— Todos —</option>
+              @foreach($insumosFiltro as $inf)
+                <option value="{{ $inf->id_insumo }}" {{ (int)$insumoSel===(int)$inf->id_insumo ? 'selected':'' }}>
+                  {{ $inf->nombre }}
+                </option>
+              @endforeach
+            </select>
+          </div>
+
+          {{-- conservar filtros de inventario al filtrar movimientos --}}
+          <input type="hidden" name="q"         value="{{ $q }}">
+          <input type="hidden" name="categoria" value="{{ $categoria }}">
+          <input type="hidden" name="estado"    value="{{ $estado }}">
+          <input type="hidden" name="stock"     value="{{ $stock }}">
+          <input type="hidden" name="desde"     value="{{ $desde }}">
+          <input type="hidden" name="hasta"     value="{{ $hasta }}">
+          <input type="hidden" name="pp"        value="{{ $pp }}">
         </form>
       </div>
+
 
       <div class="spacer"></div>
       {{-- (Opcional) botón para exportar CSV de movimientos filtrados --}}
@@ -125,6 +185,14 @@
         @endforelse
       </tbody>
     </table>
+    @if($movimientos->total() > 0)
+      <p class="muted mt-2" style="margin-bottom:.5rem">
+        Mostrando {{ $movimientos->firstItem() }}–{{ $movimientos->lastItem() }} de {{ $movimientos->total() }} movimientos
+      </p>
+    @endif
+    <div class="pagination-compact">
+      {{ $movimientos->onEachSide(1)->withPath(request()->url().'#movs')->links() }}
+    </div>
   </div>
 </div>
 @endsection

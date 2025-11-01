@@ -959,3 +959,73 @@ body{ overflow-x:hidden; }
   /* Al usar 2 columnas, quita límite estricto para que fluya */
   .grid.grid-3 .product-card { max-width: none; margin: 0; }
 }
+
+/* ===== Paginación compacta (compatible con el marcado de Laravel) ===== */
+.pagination-compact {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+/* El <nav> que renderiza links() */
+.pagination-compact nav[aria-label="Pagination Navigation"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Oculta duplicados móviles de la plantilla tailwind de Laravel */
+.pagination-compact .hidden { display: none !important; }
+
+/* Botones (a / span) */
+.pagination-compact a,
+.pagination-compact span[aria-current="page"],
+.pagination-compact span.relative.inline-flex {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1;
+  text-decoration: none;
+  color: #1a1a1a;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+
+/* Página activa */
+.pagination-compact span[aria-current="page"] {
+  background: #1f2937; /* gris oscuro */
+  border-color: #1f2937;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Hover */
+.pagination-compact a:hover {
+  background: #f6f6f6;
+}
+
+/* Deshabilitados (Anterior/Siguiente cuando no aplican) */
+.pagination-compact span[aria-disabled="true"] {
+  opacity: .45;
+  cursor: default;
+}
+
+/* Texto largo “Anterior / Siguiente” en línea con los números */
+.pagination-compact .inline-flex.items-center {
+  padding: 0 12px;
+}
+
+/* Responsive: un pelín más chico en móviles */
+@media (max-width: 640px) {
+  .pagination-compact a,
+  .pagination-compact span[aria-current="page"],
+  .pagination-compact span.relative.inline-flex {
+    min-width: 30px; height: 30px; font-size: 13px; border-radius: 8px;
+  }
+}
