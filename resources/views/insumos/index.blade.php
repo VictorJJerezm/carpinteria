@@ -123,7 +123,9 @@
         </p>
       @endif
 
-      {{ $insumos->onEachSide(1)->links() }}
+        <div class="pagination-compact">
+          {{ $insumos->onEachSide(1)->links() }}
+        </div>
     </div>
   </div>
 </div>
