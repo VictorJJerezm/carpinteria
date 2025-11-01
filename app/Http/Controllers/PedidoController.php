@@ -11,19 +11,43 @@ class PedidoController extends Controller
 {
     public function index(Request $request)
     {
-        $estado = $request->query('estado');
-        $q = Pedido::with([
-            'cliente' => fn($q) => $q->select('id','nombre','correo'),
-            'agente'  => fn($q) => $q->select('id','nombre'),
-            'detalles' => fn($q) => $q->select('id_detalle','id_pedido','id_producto','id_material','cantidad','precio_unitario','subtotal'),
-            'detalles.producto' => fn($q) => $q->select('id_producto','nombre','foto_path'),
-            'detalles.material' => fn($q) => $q->select('id_insumo','nombre'),
-        ])->orderBy('id_pedido', 'desc');
+        $q        = trim($request->query('q', ''));
+        $estado   = $request->query('estado', '');
+        $desde    = $request->query('desde', '');
+        $hasta    = $request->query('hasta', '');
+        $cliente  = (int) $request->query('cliente', 0);   // id de usuarios (cliente)
+        $perPage  = (int) $request->query('pp', 8);
+        if ($perPage < 1 || $perPage > 50) $perPage = 8;
 
-        if ($estado) $q->where('estado', $estado);
+        // 👇 Ajusta el nombre del modelo si difiere
+        $pedidos = Pedido::query()
+            ->with(['usuarioCliente']) // relación sugerida: belongsTo(Usuario::class,'id_cliente','id')
+            ->when($q !== '', fn($qq) => $qq->where(function($w) use ($q){
+                $w->where('comentario','ilike',"%{$q}%")
+                ->orWhere('id_pedido',$q); // ajusta si usas otro identificador de búsqueda
+            }))
+            ->when($estado !== '', fn($qq) => $qq->where('estado', $estado))
+            ->when($desde || $hasta, function ($qq) use ($desde, $hasta) {
+                $from = $desde ? \Illuminate\Support\Carbon::parse($desde)->startOfDay() : \Illuminate\Support\Carbon::parse('1900-01-01');
+                $to   = $hasta ? \Illuminate\Support\Carbon::parse($hasta)->endOfDay()   : \Illuminate\Support\Carbon::now();
+                $qq->whereBetween('fecha', [$from, $to]); // si usas created_at, cámbialo
+            })
+            ->when($cliente > 0, fn($qq) => $qq->where('id_cliente', $cliente)) // 👈 si tu FK se llama distinto, cámbiala
+            ->orderByDesc('fecha') // o created_at
+            ->paginate($perPage)
+            ->withQueryString();
 
-        $pedidos = $q->get();
-        return view('pedidos.index', compact('pedidos','estado'));
+        // Select de clientes: solo usuarios que aparecen en pedidos
+        $clientes = \DB::table('pedidos as p')
+            ->join('usuarios as u','u.id','=','p.id_cliente') // 👈 ajusta si tu columna difiere
+            ->distinct()
+            ->orderBy('u.nombre')
+            ->get(['u.id','u.nombre','u.correo']);
+
+        return view('pedidos.index', compact(
+            'pedidos','clientes',
+            'q','estado','desde','hasta','cliente','perPage'
+        ));
     }
 
     public function show($id)

@@ -29,4 +29,9 @@ class Cotizacion extends BaseModel
     { 
         return $this->hasOne(Pedido::class, 'id_cotizacion', 'id_cotizacion'); 
     }
+
+    public function usuarioCliente()
+    {
+        return $this->belongsTo(Usuario::class, 'id_cliente', 'id'); // ajusta nombres si difieren
+    }
 }

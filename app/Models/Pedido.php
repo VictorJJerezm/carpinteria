@@ -31,4 +31,9 @@ class Pedido extends BaseModel
     { 
         return $this->hasMany(PedidoDetalle::class, 'id_pedido', 'id_pedido'); 
     }
+
+    public function usuarioCliente()
+    {
+        return $this->belongsTo(Usuario::class, 'id_cliente', 'id'); // ajusta nombres si difieren
+    }
 }

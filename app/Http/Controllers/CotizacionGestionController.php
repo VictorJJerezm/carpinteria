@@ -13,17 +13,40 @@ class CotizacionGestionController extends Controller
     // Listado con filtro por estado
     public function index(Request $request)
     {
-        $estado = $request->query('estado'); // Pendiente | Respondida | Aprobada | Rechazada | Cancelada
-        $q = Cotizacion::with([
-            'cliente:id,nombre,correo',
-            'detalles.producto:id_producto,nombre,precio_estimado,foto_path',
-            'detalles.material:id_insumo,nombre',
-        ])->orderBy('id_cotizacion','desc');
+        $q        = trim($request->query('q', ''));
+        $estado   = $request->query('estado', '');
+        $desde    = $request->query('desde', '');
+        $hasta    = $request->query('hasta', '');
+        $cliente  = (int) $request->query('cliente', 0); 
+        $perPage  = (int) $request->query('pp', 8);
+        if ($perPage < 1 || $perPage > 50) $perPage = 8;
 
-        if ($estado) $q->where('estado', $estado);
+        $cotizaciones = \App\Models\Cotizacion::query()
+            ->with(['usuarioCliente'])
+            ->when($q !== '', fn($qq) => $qq->where(function($w) use ($q){
+                $w->where('comentario', 'ilike', "%{$q}%")
+                ->orWhere('id_cotizacion', $q);
+            }))
+            ->when($estado !== '', fn($qq) => $qq->where('estado', $estado))
+            ->when($desde || $hasta, function ($qq) use ($desde, $hasta) {
+                $from = $desde ? \Illuminate\Support\Carbon::parse($desde)->startOfDay() : \Illuminate\Support\Carbon::parse('1900-01-01');
+                $to   = $hasta ? \Illuminate\Support\Carbon::parse($hasta)->endOfDay()   : \Illuminate\Support\Carbon::now();
+                $qq->whereBetween('fecha', [$from, $to]);
+            })
+            ->when($cliente > 0, fn($qq) => $qq->where('id_cliente', $cliente))
+            ->orderByDesc('fecha')
+            ->paginate($perPage)
+            ->withQueryString();
 
-        $cotizaciones = $q->get();
-        return view('cotizaciones.admin.index', compact('cotizaciones','estado'));
+        $clientes = \DB::table('cotizaciones as c')
+            ->join('usuarios as u', 'u.id', '=', 'c.id_cliente')
+            ->distinct()
+            ->orderBy('u.nombre')
+            ->get(['u.id', 'u.nombre', 'u.correo']);
+
+        return view('cotizaciones.admin.index', compact(
+            'cotizaciones','clientes','q','estado','desde','hasta','cliente','perPage'
+        ));
     }
 
     // Ver detalle
