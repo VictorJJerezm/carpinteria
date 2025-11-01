@@ -10,11 +10,41 @@ use Illuminate\Support\Facades\Storage;
 class ProductoController extends Controller
 {
     // Listado
-    public function index()
+    public function index(Request $request)
     {
-        $productos = Producto::orderBy('id_producto','desc')->get();
-        return view('productos.index', compact('productos'));
+        $q        = trim($request->query('q', ''));
+        $estado   = $request->query('estado', '');
+        $min      = $request->query('min', '');
+        $max      = $request->query('max', '');
+        $material = $request->query('material', '');
+        $perPage  = (int) $request->query('pp', 8);
+        if ($perPage < 1 || $perPage > 50) { $perPage = 8; }
+
+        $productos = Producto::query()
+            ->when($q !== '', fn($qq) => $qq->where(function($w) use ($q){
+                $w->where('nombre', 'ilike', "%{$q}%")
+                ->orWhere('descripcion', 'ilike', "%{$q}%");
+            }))
+            ->when($estado !== '', fn($qq) => $qq->where('estado', $estado))
+            ->when($min !== '', fn($qq) => $qq->where('precio_estimado', '>=', (float)$min))
+            ->when($max !== '', fn($qq) => $qq->where('precio_estimado', '<=', (float)$max))
+            ->when($material !== '', fn($qq) => $qq->whereHas('materiales', function($w) use ($material){
+                $w->where('insumos.id_insumo', $material);
+            }))
+            ->orderBy('id_producto', 'desc')
+            ->paginate($perPage)
+            ->withQueryString();
+
+        $materiales = Insumo::where('categoria','material')
+            ->where('estado','Activo')
+            ->orderBy('nombre')
+            ->get();
+
+        return view('productos.index', compact(
+            'productos','materiales','q','estado','min','max','material','perPage'
+        ));
     }
+
 
     // Form crear
     public function create()

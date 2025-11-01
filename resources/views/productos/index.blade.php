@@ -3,8 +3,63 @@
 <h1>Productos</h1>
 @if(session('ok')) <div class="alert alert-ok mt-2">{{ session('ok') }}</div> @endif
 
-<div class="form-actions">
-  <a href="{{ route('productos.create') }}" class="btn btn-primary">+ Nuevo</a>
+<div class="card mt-2">
+  <div class="card-body">
+    <form method="GET" class="form-row">
+      <div>
+        <label>Buscar</label>
+        <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nombre o descripción">
+      </div>
+
+      <div>
+        <label>Estado</label>
+        <select name="estado">
+          <option value="">— Todos —</option>
+          <option value="Activo"   {{ ($estado ?? '')==='Activo'?'selected':'' }}>Activo</option>
+          <option value="Inactivo" {{ ($estado ?? '')==='Inactivo'?'selected':'' }}>Inactivo</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Precio mín</label>
+        <input type="number" step="0.01" name="min" value="{{ $min ?? '' }}" placeholder="0.00">
+      </div>
+
+      <div>
+        <label>Precio máx</label>
+        <input type="number" step="0.01" name="max" value="{{ $max ?? '' }}" placeholder="0.00">
+      </div>
+
+      <div>
+        <label>Material</label>
+        <select name="material">
+          <option value="">— Cualquiera —</option>
+          @foreach($materiales as $m)
+            <option value="{{ $m->id_insumo }}" {{ (string)($material ?? '')===(string)$m->id_insumo?'selected':'' }}>
+              {{ $m->nombre }}
+            </option>
+          @endforeach
+        </select>
+      </div>
+
+      <div>
+        <label>Por página</label>
+        <select name="pp">
+          @foreach([4,8,12,16,24] as $pp)
+            <option value="{{ $pp }}" {{ (int)($perPage ?? 4)===$pp?'selected':'' }}>{{ $pp }}</option>
+          @endforeach
+        </select>
+      </div>
+
+      <div class="items-end flex">
+        <button class="btn btn-secondary btn-sm" type="submit">Filtrar</button>
+      </div>
+
+      <div class="items-end flex" style="margin-left:auto">
+        <a href="{{ route('productos.create') }}" class="btn btn-primary btn-sm">+ Nuevo</a>
+      </div>
+    </form>
+  </div>
 </div>
 
 <div class="mt-3 card">
