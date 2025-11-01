@@ -7,6 +7,72 @@
   <a href="{{ route('insumos.create') }}" class="btn btn-primary">+ Nuevo insumo</a>
 </div>
 
+<div class="card mt-2">
+  <div class="card-body">
+    <form method="GET" class="form-row">
+
+      <div>
+        <label>Buscar</label>
+        <input type="text" name="q" value="{{ $q ?? '' }}" placeholder="Nombre o descripción">
+      </div>
+
+      <div>
+        <label>Categoría</label>
+        <select name="categoria">
+          <option value="">— Todas —</option>
+          @foreach($categorias as $c)
+            <option value="{{ $c }}" {{ ($categoria ?? '')===$c?'selected':'' }}>
+              {{ ucfirst($c) }}
+            </option>
+          @endforeach
+        </select>
+      </div>
+
+      <div>
+        <label>Tipo de material</label>
+        <input type="text" name="tipo" value="{{ $tipo ?? '' }}" placeholder="Ej: madera, metal...">
+      </div>
+
+      <div>
+        <label>Estado</label>
+        <select name="estado">
+          <option value="">— Todos —</option>
+          <option value="Activo" {{ ($estado ?? '')==='Activo'?'selected':'' }}>Activo</option>
+          <option value="Inactivo" {{ ($estado ?? '')==='Inactivo'?'selected':'' }}>Inactivo</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Precio mín</label>
+        <input type="number" step="0.01" name="min" value="{{ $min ?? '' }}" placeholder="0.00">
+      </div>
+
+      <div>
+        <label>Precio máx</label>
+        <input type="number" step="0.01" name="max" value="{{ $max ?? '' }}" placeholder="0.00">
+      </div>
+
+      <div>
+        <label>Por página</label>
+        <select name="pp">
+          @foreach([8,12,16,24] as $pp)
+            <option value="{{ $pp }}" {{ (int)($perPage ?? 8)===$pp?'selected':'' }}>{{ $pp }}</option>
+          @endforeach
+        </select>
+      </div>
+
+      <div class="items-end flex">
+        <button class="btn btn-secondary btn-sm" type="submit">Filtrar</button>
+      </div>
+
+      <div class="items-end flex" style="margin-left:auto">
+        <a href="{{ route('insumos.create') }}" class="btn btn-primary btn-sm">+ Nuevo</a>
+      </div>
+
+    </form>
+  </div>
+</div>
+
 <div class="card mt-3">
   <div class="card-body">
     <table class="table">
@@ -55,6 +121,15 @@
         @endforelse
       </tbody>
     </table>
+    <div class="mt-2">
+      @if($insumos->total() > 0)
+        <p class="muted" style="margin-bottom:.5rem">
+          Mostrando {{ $insumos->firstItem() }}–{{ $insumos->lastItem() }} de {{ $insumos->total() }} insumos
+        </p>
+      @endif
+
+      {{ $insumos->onEachSide(1)->links() }}
+    </div>
   </div>
 </div>
 @endsection

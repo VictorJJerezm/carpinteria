@@ -8,9 +8,39 @@ use Illuminate\Support\Facades\DB;
 
 class InsumoController extends Controller
 {
-    public function index() {
-        $insumos = Insumo::with('inventario')->orderBy('id_insumo','desc')->get();
-        return view('insumos.index', compact('insumos'));
+    public function index(Request $request)
+    {
+        $q         = trim($request->query('q', ''));
+        $categoria = $request->query('categoria', '');
+        $tipo      = $request->query('tipo', '');
+        $estado    = $request->query('estado', '');
+        $min       = $request->query('min', '');
+        $max       = $request->query('max', '');
+        $perPage   = (int) $request->query('pp', 8);
+        if ($perPage < 1 || $perPage > 50) { $perPage = 8; }
+
+        $insumos = Insumo::query()
+            ->when($q !== '', fn($qq) => $qq->where(function($w) use ($q){
+                $w->where('nombre', 'ilike', "%{$q}%")
+                ->orWhere('descripcion', 'ilike', "%{$q}%");
+            }))
+            ->when($categoria !== '', fn($qq) => $qq->where('categoria', $categoria))
+            ->when($tipo !== '', fn($qq) => $qq->where('tipo_material', 'ilike', "%{$tipo}%"))
+            ->when($estado !== '', fn($qq) => $qq->where('estado', $estado))
+            ->when($min !== '', fn($qq) => $qq->where('precio', '>=', (float)$min))
+            ->when($max !== '', fn($qq) => $qq->where('precio', '<=', (float)$max))
+            ->orderBy('nombre')
+            ->paginate($perPage)
+            ->withQueryString();
+
+        $categorias = Insumo::select('categoria')
+            ->distinct()
+            ->orderBy('categoria')
+            ->pluck('categoria');
+
+        return view('insumos.index', compact(
+            'insumos','categorias','q','categoria','tipo','estado','min','max','perPage'
+        ));
     }
 
     public function create() { return view('insumos.create'); }
