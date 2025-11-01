@@ -106,6 +106,9 @@
         @endforelse
       </tbody>
     </table>
+    <div class="pagination-compact">
+      {{ $productos->onEachSide(1)->links() }}
+    </div>
   </div>
 </div>
 @endsection
