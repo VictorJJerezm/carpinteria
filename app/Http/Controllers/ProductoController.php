@@ -124,12 +124,21 @@ class ProductoController extends Controller
     // Eliminar
     public function destroy(Producto $producto)
     {
-        if ($producto->foto_path && Storage::disk('public')->exists($producto->foto_path)) {
-            Storage::disk('public')->delete($producto->foto_path);
-        }
-        $producto->delete();
+        try {
+            // ✅ Evita borrar si está en cotizaciones
+            if ($producto->detalles()->exists()) {
+                return back()->with('bad', 'No se puede eliminar: el producto ya fue utilizado en cotizaciones. Puedes marcarlo como Inactivo.');
+            }
 
-        return back()->with('ok', 'Producto eliminado.');
+            $producto->delete();
+            return back()->with('ok', 'Producto eliminado.');
+        } catch (QueryException $e) {
+            // 23503 = violación de FK en PostgreSQL
+            if ($e->getCode() === '23503') {
+                return back()->with('bad', 'No se puede eliminar: el producto está referenciado en cotizaciones.');
+            }
+            throw $e; // otros errores, los re-lanzamos
+        }
     }
 
     // Sincronización de materiales + recargos

@@ -77,7 +77,16 @@
       </tbody>
     </table>
 
-    <div class="mt-2">{{ $prov->links() }}</div>
+    @if($prov->total() > 0)
+      <p class="muted mt-2" style="margin-bottom:.5rem">
+        Mostrando {{ $prov->firstItem() }}–{{ $prov->lastItem() }} de {{ $prov->total() }} proveedores
+      </p>
+    @endif
+
+    <div class="pagination-compact">
+      {{ $prov->onEachSide(1)->links() }}
+    </div>
+    <!-- <div class="mt-2">{{ $prov->links() }}</div> -->
   </div>
 </div>
 @endsection

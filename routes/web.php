@@ -148,6 +148,9 @@ Route::middleware(['auth', 'activo', 'rol:admin,carpintero'])
 
     //Proveedores
     Route::resource('proveedores', ProveedorController::class)
+        ->parameters(['proveedores' => 'proveedor']);
+
+    Route::resource('proveedores', ProveedorController::class)
         ->except(['show']);
 
     Route::get('proveedores/{proveedor}/solicitar',

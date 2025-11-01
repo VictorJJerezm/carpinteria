@@ -17,4 +17,9 @@ class Producto extends BaseModel
         return $this->belongsToMany(Insumo::class, 'producto_material', 'id_producto', 'id_material')
                     ->withPivot('recargo');
     }
+
+    public function detalles()
+    {
+        return $this->hasMany(DetalleCotizacion::class, 'id_producto', 'id_producto');
+    }
 }

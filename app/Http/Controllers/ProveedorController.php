@@ -16,6 +16,7 @@ class ProveedorController extends Controller
         $q    = trim((string)$request->query('q', ''));
         $tag  = trim((string)$request->query('tag',''));
         $act  = $request->query('activo', 'todos'); // todos|1|0
+        $perPage = 8;
 
         $prov = Proveedor::query()
             ->when($q !== '', function($qq) use ($q) {
@@ -29,7 +30,7 @@ class ProveedorController extends Controller
             ->when($tag !== '', fn($qq) => $qq->where('etiquetas','ilike',"%{$tag}%"))
             ->when(in_array($act, ['0','1'], true), fn($qq) => $qq->where('activo', (bool)$act))
             ->orderBy('nombre')
-            ->paginate(15)
+            ->paginate($perPage)
             ->withQueryString();
 
         // Nube de etiquetas rápida

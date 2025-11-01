@@ -2,6 +2,7 @@
 @section('contenido')
 <h1>Productos</h1>
 @if(session('ok')) <div class="alert alert-ok mt-2">{{ session('ok') }}</div> @endif
+@if(session('bad')) <div class="alert alert-bad mt-2">{{ session('bad') }}</div> @endif
 
 <div class="form-actions">
   <a href="{{ route('productos.create') }}" class="btn btn-primary">+ Nuevo</a>
