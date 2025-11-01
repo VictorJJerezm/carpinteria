@@ -64,11 +64,6 @@
       <div class="items-end flex">
         <button class="btn btn-secondary btn-sm" type="submit">Filtrar</button>
       </div>
-
-      <div class="items-end flex" style="margin-left:auto">
-        <a href="{{ route('insumos.create') }}" class="btn btn-primary btn-sm">+ Nuevo</a>
-      </div>
-
     </form>
   </div>
 </div>

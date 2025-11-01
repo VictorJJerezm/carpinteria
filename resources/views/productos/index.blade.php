@@ -3,6 +3,10 @@
 <h1>Productos</h1>
 @if(session('ok')) <div class="alert alert-ok mt-2">{{ session('ok') }}</div> @endif
 
+<div class="form-actions">
+  <a href="{{ route('productos.create') }}" class="btn btn-primary">+ Nuevo</a>
+</div>
+
 <div class="card mt-2">
   <div class="card-body">
     <form method="GET" class="form-row">
@@ -53,10 +57,6 @@
 
       <div class="items-end flex">
         <button class="btn btn-secondary btn-sm" type="submit">Filtrar</button>
-      </div>
-
-      <div class="items-end flex" style="margin-left:auto">
-        <a href="{{ route('productos.create') }}" class="btn btn-primary btn-sm">+ Nuevo</a>
       </div>
     </form>
   </div>
