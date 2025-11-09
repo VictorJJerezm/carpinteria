@@ -106,10 +106,8 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Selecciona tus tablas (usa la clase que ya tienes)
   const tables = document.querySelectorAll('table.table.cots');
 
-  // Crea el wrapper con overflow-x si no existe
   tables.forEach(tbl => {
     if (!tbl.parentElement.classList.contains('table-scroll')) {
       const wrap = document.createElement('div');
@@ -120,26 +118,24 @@ document.addEventListener('DOMContentLoaded', () => {
       wrap.style.borderRadius = '12px';
       wrap.style.background = 'transparent';
 
-      // Inserta el wrapper y mete la tabla dentro
       tbl.parentElement.insertBefore(wrap, tbl);
       wrap.appendChild(tbl);
     }
-    // Fuerza un ancho mínimo “de escritorio” para evitar que colapse
-    tbl.style.minWidth = '820px'; // sube/baja este valor según tus columnas
+    // Fuerza un ancho mínimo
+    tbl.style.minWidth = '820px';
     tbl.style.borderCollapse = 'separate';
     tbl.style.borderSpacing = '0';
 
-    // Evita que todo se rompa en varias líneas
     tbl.querySelectorAll('th, td').forEach(cell => {
       cell.style.whiteSpace = 'nowrap';
     });
-    // Permite que SOLO el detalle pueda partirse en varias líneas si es muy largo
+
     tbl.querySelectorAll('td[data-label="Detalle"]').forEach(cell => {
       cell.style.whiteSpace = 'normal';
     });
   });
 
-  // Drag-to-scroll (mouse y táctil) para una UX más fluida
+  // Drag-to-scroll (mouse y táctil) para una UX más fluida desde el telefono
   document.querySelectorAll('.table-scroll').forEach(scroller => {
     let isDown = false, startX = 0, scrollLeft = 0;
 
@@ -169,12 +165,12 @@ document.addEventListener('DOMContentLoaded', () => {
     scroller.addEventListener('touchend', end);
   });
 
-  // Opcional: header "pegado" cuando hay scroll horizontal en móviles
+  // Header "pegado" cuando hay scroll horizontal en móviles - VJ
   const stickyHeaderCSS = `
     @media (max-width: 768px){
       .table-scroll thead th{
         position: sticky; top: 0; z-index: 1;
-        background: #fff7f0; /* ajusta al color de tu header de tabla */
+        background: #fff7f0; /* Color del header de tabla - VJ */
       }
       .table-scroll.grabbing { cursor: grabbing; }
       .table-scroll { cursor: grab; }

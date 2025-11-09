@@ -125,7 +125,7 @@ class ProductoController extends Controller
     public function destroy(Producto $producto)
     {
         try {
-            // ✅ Evita borrar si está en cotizaciones
+            // No elimina si el producto está en cotización
             if ($producto->detalles()->exists()) {
                 return back()->with('bad', 'No se puede eliminar: el producto ya fue utilizado en cotizaciones. Puedes marcarlo como Inactivo.');
             }
@@ -137,7 +137,7 @@ class ProductoController extends Controller
             if ($e->getCode() === '23503') {
                 return back()->with('bad', 'No se puede eliminar: el producto está referenciado en cotizaciones.');
             }
-            throw $e; // otros errores, los re-lanzamos
+            throw $e;
         }
     }
 

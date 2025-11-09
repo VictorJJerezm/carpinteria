@@ -100,7 +100,6 @@
 
 <script>
 (() => {
-  // Cargamos JSON ya “limpio”
   const DATA = @json($productosJs);
 
   const map = new Map(DATA.map(p => [String(p.id), p]));

@@ -34,6 +34,6 @@ class Pedido extends BaseModel
 
     public function usuarioCliente()
     {
-        return $this->belongsTo(Usuario::class, 'id_cliente', 'id'); // ajusta nombres si difieren
+        return $this->belongsTo(Usuario::class, 'id_cliente', 'id');
     }
 }

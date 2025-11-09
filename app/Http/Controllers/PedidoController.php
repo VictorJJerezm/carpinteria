@@ -15,31 +15,29 @@ class PedidoController extends Controller
         $estado   = $request->query('estado', '');
         $desde    = $request->query('desde', '');
         $hasta    = $request->query('hasta', '');
-        $cliente  = (int) $request->query('cliente', 0);   // id de usuarios (cliente)
+        $cliente  = (int) $request->query('cliente', 0);
         $perPage  = (int) $request->query('pp', 8);
         if ($perPage < 1 || $perPage > 50) $perPage = 8;
 
-        // 👇 Ajusta el nombre del modelo si difiere
         $pedidos = Pedido::query()
-            ->with(['usuarioCliente']) // relación sugerida: belongsTo(Usuario::class,'id_cliente','id')
+            ->with(['usuarioCliente']) 
             ->when($q !== '', fn($qq) => $qq->where(function($w) use ($q){
                 $w->where('comentario','ilike',"%{$q}%")
-                ->orWhere('id_pedido',$q); // ajusta si usas otro identificador de búsqueda
+                ->orWhere('id_pedido',$q);
             }))
             ->when($estado !== '', fn($qq) => $qq->where('estado', $estado))
             ->when($desde || $hasta, function ($qq) use ($desde, $hasta) {
                 $from = $desde ? \Illuminate\Support\Carbon::parse($desde)->startOfDay() : \Illuminate\Support\Carbon::parse('1900-01-01');
                 $to   = $hasta ? \Illuminate\Support\Carbon::parse($hasta)->endOfDay()   : \Illuminate\Support\Carbon::now();
-                $qq->whereBetween('fecha', [$from, $to]); // si usas created_at, cámbialo
+                $qq->whereBetween('fecha', [$from, $to]);
             })
-            ->when($cliente > 0, fn($qq) => $qq->where('id_cliente', $cliente)) // 👈 si tu FK se llama distinto, cámbiala
-            ->orderByDesc('fecha') // o created_at
+            ->when($cliente > 0, fn($qq) => $qq->where('id_cliente', $cliente))
+            ->orderByDesc('fecha')
             ->paginate($perPage)
             ->withQueryString();
 
-        // Select de clientes: solo usuarios que aparecen en pedidos
         $clientes = \DB::table('pedidos as p')
-            ->join('usuarios as u','u.id','=','p.id_cliente') // 👈 ajusta si tu columna difiere
+            ->join('usuarios as u','u.id','=','p.id_cliente')
             ->distinct()
             ->orderBy('u.nombre')
             ->get(['u.id','u.nombre','u.correo']);

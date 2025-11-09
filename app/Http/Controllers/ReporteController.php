@@ -159,7 +159,6 @@ class ReporteController extends Controller
 
     public function insumos(Request $r)
     {
-        // Inventarios: id_inv, id_insumo, cantidad, stock_minimo, costo_promedio, fecha_actualizacion
         $rows = \DB::table('insumos as i')
             ->leftJoin('inventarios as inv', 'inv.id_insumo', '=', 'i.id_insumo')
             ->select(
@@ -169,7 +168,6 @@ class ReporteController extends Controller
                 \DB::raw('COALESCE(inv.cantidad, 0) as stock'),
                 \DB::raw('COALESCE(inv.stock_minimo, 0) as stock_minimo'),
                 \DB::raw('COALESCE(inv.costo_promedio, 0) as costo_promedio'),
-                // opcional, si quieres mostrar la fecha en la vista
                 \DB::raw("to_char(inv.fecha_actualizacion, 'YYYY-MM-DD') as fecha_actualizacion")
             )
             ->orderBy('i.nombre')
@@ -259,7 +257,7 @@ class ReporteController extends Controller
             ->leftJoin('inventarios as inv', 'inv.id_insumo', '=', 'i.id_insumo')
             ->select(
                 'i.nombre',
-                \DB::raw('COALESCE(inv.cantidad, 0) as stock'),          // ← cantidad
+                \DB::raw('COALESCE(inv.cantidad, 0) as stock'),          // cantidad
                 \DB::raw('COALESCE(inv.stock_minimo, 0) as stock_minimo'),
                 \DB::raw('COALESCE(inv.costo_promedio, 0) as costo_promedio')
             )

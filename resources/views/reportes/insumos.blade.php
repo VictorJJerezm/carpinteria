@@ -15,7 +15,6 @@
 @endphp
 
 <style>
-  /* Asegura altura real para Chart.js en modo responsive */
   .chart-box { position: relative; height: 260px; width: 100%; }
 </style>
 
@@ -60,7 +59,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   window.addEventListener('load', function () {
-    // Doughnut: OK vs Bajo
+    // Doughnut: OK vs Bajo - VJ
     const ctxE = document.getElementById('chartEstado')?.getContext('2d');
     if (ctxE) {
       new Chart(ctxE, {
@@ -70,7 +69,7 @@
       });
     }
 
-    // Barra horizontal: Top críticos
+    // Barra horizontal: Top críticos - VJ
     const labelsLow = @json($criticos->pluck('nombre')->values());
     const valuesLow = @json($criticos->pluck('porcentaje')->values());
     const ctxL = document.getElementById('chartCriticos')?.getContext('2d');

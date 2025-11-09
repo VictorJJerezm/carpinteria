@@ -142,12 +142,12 @@ class ProveedorController extends Controller
                 'id_proveedor' => $proveedor->id_proveedor,
                 'direccion'    => 'saliente',
                 'asunto'       => $data['asunto'],
-                'cuerpo'       => $data['mensaje'], // puedes guardar HTML si tu correo lo usa
+                'cuerpo'       => $data['mensaje'],
                 'de_email'     => config('mail.from.address'),
                 'para_email'   => $proveedor->correo,
                 'cc'           => $data['cc'] ?? null,
                 'fecha'        => now(),
-                'message_id'   => null, // lo tendremos cuando sincronicemos "Sent" (opcional)
+                'message_id'   => null,
                 'adjuntos'     => null,
             ]);
         }

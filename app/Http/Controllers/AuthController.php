@@ -11,7 +11,7 @@ use App\Models\Usuario;
 
 class AuthController extends Controller
 {
-    /** LOGIN */
+    /* LOGIN */
     public function loginForm()
     {
         return view('auth.login');
@@ -24,7 +24,6 @@ class AuthController extends Controller
             'contra' => ['required']
         ]);
 
-        // Nota: 'password' debe pasar en el array; getAuthPassword() usa 'contrasena'
         if (Auth::attempt(['correo' => $cred['correo'], 'password' => $cred['contra'], 'activo' => true])) {
             $request->session()->regenerate();
             $u = Auth::user();
@@ -44,10 +43,10 @@ class AuthController extends Controller
         return redirect()->route('catalogo.index');
     }
 
-    /** REGISTRO (cliente) */
+    /* REGISTRO (cliente) */
     public function registerForm()
     {
-        return view('auth.register'); // crea resources/views/auth/register.blade.php
+        return view('auth.register'); 
     }
 
     public function register(Request $request)
@@ -74,7 +73,7 @@ class AuthController extends Controller
             'nombre'   => ['required','string','max:120'],
             'correo'   => ['required','email','max:150','unique:usuarios,correo'],
             'telefono' => ['nullable','string','max:30'],
-            'contra'   => ['required','string','min:8','confirmed'], // requiere contra_confirmation
+            'contra'   => ['required','string','min:8','confirmed'],
             'acepta'   => ['accepted'],
         ], $messages);
 

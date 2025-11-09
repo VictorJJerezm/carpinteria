@@ -308,12 +308,7 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
 @media (min-width:641px){ .show-mobile{ display:none !important; } }
 
 
-/* ===== Micro-breakpoints para teléfonos estrechos ===== */
-
-/* 1) Teléfonos ≤ 380px (S25 en modo “360px”) */
 @media (max-width: 380px){
-
-  /* Tokens + respiración */
   :root{
     --pad: .75rem;
     --radius: 10px;
@@ -325,7 +320,7 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
   .navbar .brand{
     font-size: 1rem;
     letter-spacing: .1px;
-    max-width: 40vw;            /* evita que el texto empuje al menú */
+    max-width: 40vw; 
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
   .navbar nav{ gap: .4rem; margin-left: .5rem; }
@@ -344,7 +339,7 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
   }
   input[type], select, textarea{
     padding: .65rem .75rem;
-    font-size: 16px; /* iOS no hace zoom */
+    font-size: 16px;
   }
   .form-row{ grid-template-columns: 1fr; gap: .75rem; }
   .form-actions{ flex-direction: column; align-items: stretch; }
@@ -356,24 +351,22 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
   .table th, .table td{
     padding: .55rem .6rem;
     font-size: .95rem;
-    word-break: break-word;      /* correos largos */
+    word-break: break-word;
   }
   .table .actions{
     gap: .3rem;
-    flex-wrap: wrap;             /* para que no se desborde */
+    flex-wrap: wrap;
   }
   .table .actions .btn{
-    flex: 1 1 auto;              /* que puedan ocupar ancho si hace falta */
+    flex: 1 1 auto;
   }
 
-  /* Dropdowns que no se salgan */
   .dropdown-menu{
     max-width: calc(100vw - 1.2rem);
     left: 0;
     right: auto;
   }
 
-  /* Stacked mode más legible en super estrecho (si lo usas) */
   .table.table-stacked td{
     padding: .3rem 0;
   }
@@ -382,37 +375,32 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
   }
 }
 
-/* 2) Ultra-estrechos ≤ 340px (por si acaso) */
 @media (max-width: 340px){
   .navbar a{ padding: .4rem .45rem; font-size: .9rem; }
   .btn{ min-height: 38px; font-size: .9rem; padding: .45rem .6rem; }
   .table th, .table td{ padding: .5rem .55rem; font-size: .9rem; }
 }
 
-/* Abreviaturas automáticas en nav para ≤380px */
 @media (max-width: 380px){
   nav a[href$="usuarios"]::after{ content:"Usuarios"; }
   nav a[href$="usuarios"]{ font-size:.95rem; }
 
-  /* Ejemplos con data-attrs para no depender de href */
   nav a[data-short]::after{ content: attr(data-short); }
   nav a[data-short]{ position:relative; }
-  nav a[data-short] > *{ visibility: hidden; } /* oculta el texto real */
+  nav a[data-short] > *{ visibility: hidden; } 
 }
 
-/* ========= NAV + TABLAS AJUSTE 360px ========= */
 @media (max-width: 380px){
-  /* Navbar más compacta */
   .navbar .row{ gap:.4rem; }
   .navbar .brand{
     font-size: 1rem;
-    max-width: 42vw;                 /* que no empuje al resto */
+    max-width: 42vw;
     overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
   }
   .navbar nav{
     margin-left:.35rem;
     gap:.45rem;
-    overflow-x:auto;                  /* ya lo tienes, lo reforzamos */
+    overflow-x:auto;                 
     -webkit-overflow-scrolling:touch;
     scrollbar-width:none;
     white-space:nowrap;
@@ -420,28 +408,26 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
   .navbar nav::-webkit-scrollbar{ display:none; }
   .navbar a{ padding:.38rem .5rem; font-size:.95rem; border-radius:9px; }
 
-  /* Botón Salir / Crear / Ingresar: pasa abajo para no cortar el menú */
   .navbar .nav-auth{
-    order: 3;                         /* coloca el bloque al final */
+    order: 3;                    
     width: 100%;
     margin-top: .25rem;
     display: flex;
     gap: .4rem;
   }
   .navbar .nav-auth .btn{
-    flex: 1 1 0;                      /* se reparten el ancho */
+    flex: 1 1 0;
     min-height: 40px;
     font-size: .95rem;
     justify-content: center;
   }
-  .navbar .spacer{ display:none; }    /* no necesitamos el espacio en móvil */
+  .navbar .spacer{ display:none; }
 }
 
-/* Tablas: en 360 mejor con desplazamiento lateral */
 @media (max-width: 380px){
   .table-responsive{ overflow-x:auto; }
   .table{
-    min-width: 560px;                 /* fuerza scroll si hay muchas columnas */
+    min-width: 560px;
   }
   .table th, .table td{
     padding:.52rem .55rem;
@@ -451,7 +437,6 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
   .table .actions .btn{ flex:1 1 auto; }
 }
 
-/* ====== FIX definitivo navbar 360px ====== */
 @media (max-width: 380px){
   .navbar .row{
     display: flex;
@@ -460,7 +445,6 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
     gap: .4rem;
   }
 
-  /* 1) Brand queda a la izquierda, tamaño compacto */
   .navbar .brand{
     flex: 0 0 auto;
     font-size: 1rem;
@@ -470,10 +454,9 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
     white-space: nowrap;
   }
 
-  /* 2) NAV ocupa su propia fila (100%) y hace scroll horizontal si no cabe */
   .navbar nav{
     order: 2;
-    flex: 0 0 100% !important;   /* fuerza nueva fila */
+    flex: 0 0 100% !important;
     margin-left: 0 !important;
     max-width: 100%;
     overflow-x: auto;
@@ -484,11 +467,10 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
   .navbar nav::-webkit-scrollbar{ display:none; }
   .navbar a{ padding:.38rem .5rem; font-size:.95rem; border-radius:9px; }
 
-  /* 3) Bloque de sesión SIEMPRE en una fila completa debajo del nav */
   .navbar .spacer{ display: none !important; }
   .navbar .nav-auth{
     order: 3;
-    flex: 0 0 100% !important;   /* fila nueva */
+    flex: 0 0 100% !important;
     display: flex;
     gap: .4rem;
     margin-top: .25rem;
@@ -504,26 +486,22 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
   }
 }
 
-/* ===== Ajuste fino de tabla en móviles (≤400px) ===== */
 @media (max-width: 400px){
 
-  /* Contenedor de tabla: quita desbordes y añade respiración controlada */
   .table-responsive{
     overflow-x: auto;
     padding: 0; 
     margin: 0;
   }
 
-  /* Tabla ocupa todo el ancho visible sin empujar */
   .table{
     width: 100%;
-    min-width: auto;            /* anula el min-width global si existía */
+    min-width: auto;
     border-radius: 10px;
     border-spacing: 0;
     border-collapse: collapse;
   }
 
-  /* Reduce padding en celdas */
   .table th, .table td{
     padding: .4rem .45rem !important;
     font-size: .93rem;
@@ -531,29 +509,24 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
     word-break: break-word;
   }
 
-  /* Filas más compactas */
   .table tbody tr{
     border-top: 1px solid var(--border);
   }
 
-  /* Última fila sin margen visual extra */
   .table tbody tr:last-child td{
     border-bottom: none;
   }
 
-  /* Para el modo stacked */
   .table.table-stacked td{
     padding: .35rem 0 !important;
   }
 }
 
-/* ===== NAV: forzar filas separadas en ≤380px ===== */
 @media (max-width:380px){
   .navbar .row{ display:flex; flex-wrap:wrap; align-items:flex-start; gap:.4rem; }
   .navbar .brand{ flex:0 0 auto; font-size:1rem; max-width:42vw; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .navbar .spacer{ display:none !important; }
 
-  /* NAV ocupa una fila completa y hace scroll si no cabe */
   .navbar nav{
     order:2; flex:0 0 100% !important; margin-left:0 !important; max-width:100%;
     overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; gap:.45rem;
@@ -561,7 +534,6 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
   .navbar nav::-webkit-scrollbar{ display:none; }
   .navbar a{ padding:.38rem .5rem; font-size:.95rem; border-radius:9px; }
 
-  /* BLOQUE AUTH SIEMPRE EN SU PROPIA FILA (1 o 2 botones) */
   .navbar .nav-auth{
     order:3; flex:0 0 100% !important; display:flex; gap:.4rem; margin-top:.25rem;
   }
@@ -571,8 +543,6 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
   }
 }
 
-/* ===== TABLA de cotizaciones: “stacked” automático en ≤400px ===== */
-/* No necesitas data-label; colocamos los títulos con nth-child */
 @media (max-width:400px){
   .table.cots thead{ display:none; }
   .table.cots, .table.cots tbody, .table.cots tr, .table.cots td{ display:block; width:100%; }
@@ -589,7 +559,6 @@ input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--bran
   .table.cots .actions{ flex-direction:column; gap:.3rem; }
 }
 
-/* Evita cualquier desbordamiento lateral residual */
 body{ overflow-x:hidden; }
 
 @media (max-width:400px){
@@ -603,7 +572,6 @@ body{ overflow-x:hidden; }
   }
 }
 
-/* ===== NAVBAR: forzar 2 filas (links + auth) en móviles hasta 480px ===== */
 @media (max-width: 480px){
   .navbar .row{
     display: flex;
@@ -612,7 +580,6 @@ body{ overflow-x:hidden; }
     gap: .5rem;
   }
 
-  /* Brand compacto para que no empuje el resto */
   .navbar .brand{
     flex: 0 0 auto;
     font-size: 1rem;
@@ -622,13 +589,11 @@ body{ overflow-x:hidden; }
     white-space: nowrap;
   }
 
-  /* El separador no se usa en móvil */
   .navbar .spacer{ display:none !important; }
 
-  /* El NAV ocupa su propia fila (100%) y hace scroll horizontal si no cabe */
   .navbar nav{
     order: 2;
-    flex: 0 0 100% !important;      /* 🔑 fuerza nueva fila */
+    flex: 0 0 100% !important;
     margin-left: 0 !important;
     max-width: 100%;
     overflow-x: auto;
@@ -639,10 +604,9 @@ body{ overflow-x:hidden; }
   .navbar nav::-webkit-scrollbar{ display:none; }
   .navbar a{ padding:.38rem .5rem; font-size:.95rem; border-radius:9px; }
 
-  /* Bloque de autenticación SIEMPRE en otra fila y a todo lo ancho */
   .navbar .nav-auth{
     order: 3;
-    flex: 0 0 100% !important;      /* 🔑 fuerza nueva fila */
+    flex: 0 0 100% !important;
     display: flex;
     gap: .5rem;
     margin-top: .25rem;
@@ -658,7 +622,6 @@ body{ overflow-x:hidden; }
   }
 }
 
-/* Anti-desbordes laterales residuales */
 body{ overflow-x: hidden; }
 
 @media (max-width:480px){
@@ -666,11 +629,10 @@ body{ overflow-x: hidden; }
   .table.cots tr.no-data td::before{ content:none; }
 }
 
-/* ===== NAVBAR: 2 filas (enlaces + auth) hasta 480px ===== */
 @media (max-width: 480px){
   .navbar .row{
     display:flex;
-    flex-wrap:wrap;                /* permite saltos de fila */
+    flex-wrap:wrap;
     align-items:flex-start;
     gap:.5rem;
   }
@@ -686,10 +648,9 @@ body{ overflow-x: hidden; }
 
   .navbar .spacer{ display:none !important; }
 
-  /* 1) NAV ocupa una fila completa y hace scroll lateral si no cabe */
   .navbar nav{
     order:2;
-    flex:0 0 100% !important;      /* 🔑 fuerza nueva fila */
+    flex:0 0 100% !important;
     margin-left:0 !important;
     max-width:100%;
     overflow-x:auto;
@@ -700,10 +661,9 @@ body{ overflow-x: hidden; }
   .navbar nav::-webkit-scrollbar{ display:none; }
   .navbar a{ padding:.38rem .5rem; font-size:.95rem; border-radius:9px; }
 
-  /* 2) AUTH siempre en otra fila y ocupando 100% */
   .navbar .nav-auth{
     order:3;
-    flex:0 0 100% !important;      /* 🔑 fila completa sí o sí */
+    flex:0 0 100% !important;
     display:flex;
     gap:.5rem;
     margin-top:.25rem;
@@ -719,13 +679,10 @@ body{ overflow-x: hidden; }
   }
 }
 
-/* En desktop vuelve a su comportamiento normal */
 @media (min-width: 769px){
   .navbar .nav-auth{ order:initial; flex:0 0 auto; }
 }
 
-/* ===== COTIZACIONES: modo “tarjeta” en móvil (≤480px) ===== */
-/* No hace falta tocar Blade: usamos nth-child para nombrar campos */
 @media (max-width: 480px){
   .table.cots thead{ display:none; }
   .table.cots, .table.cots tbody, .table.cots tr, .table.cots td{
@@ -757,18 +714,14 @@ body{ overflow-x: hidden; }
   .table.cots td:nth-child(5)::before{ content:"Total"; }
   .table.cots td:nth-child(6)::before{ content:"Acciones"; }
 
-  /* Botones de acciones apilados */
   .table.cots .actions{ flex-direction:column; gap:.3rem; }
 
-  /* Fila “sin datos” sin etiqueta */
   .table.cots tr.no-data td{ display:block; border:0; padding:.5rem 0; }
   .table.cots tr.no-data td::before{ content:none; }
 }
 
-/* Anti-desbordes laterales residuales */
 body{ overflow-x:hidden; }
 
-/* ---- Mis Cotizaciones (móvil <=480px) ---- */
 .table-responsive{ width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
 
 @media (max-width: 480px){
@@ -796,7 +749,6 @@ body{ overflow-x:hidden; }
     margin-bottom:.15rem;
   }
 
-  /* acciones táctiles a ancho completo */
   .table.cots td.actions{
     padding-top:.5rem;
     display:grid;
@@ -809,47 +761,42 @@ body{ overflow-x:hidden; }
     font-size:1rem;
   }
 
-  /* si quieres ocultar la columna "#" en móvil, descomenta:
-  .table.cots td[data-label="#"]{ display:none; }
-  */
 }
 
-/* ===== Tabla con scroll horizontal en pantallas pequeñas ===== */
+
 .table-scroll{
   width: 100%;
-  overflow-x: auto;                /* <- barra horizontal */
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   border-radius: 12px;
   background: transparent;
 }
 
-/* Asegura que la tabla tenga un ancho mínimo “de escritorio” */
+
 .table-scroll > table{
-  min-width: 760px;                /* ajusta si necesitas más/menos */
+  min-width: 760px;
   border-collapse: separate;
   border-spacing: 0;
 }
 
-/* Que las celdas no se rompan raro al hacer scroll */
 .table-scroll th,
 .table-scroll td{
-  white-space: nowrap;             /* títulos y números en una línea */
+  white-space: nowrap;             
 }
 .table-scroll td[data-label="Detalle"]{
-  white-space: normal;             /* el detalle sí puede partirse */
+  white-space: normal;            
 }
 
-/* Opcional: header fijo mientras haces scroll horizontal */
+
 @media (max-width: 768px){
   .table-scroll thead th{
     position: sticky;
     top: 0;
-    background: #fff7f0;          /* mismo tono que tu header de tabla */
+    background: #fff7f0;
     z-index: 1;
   }
 }
 
-/* Botón “Salir” mejor alineado en móvil */
 @media (max-width: 480px){
   .nav-auth{ width:100%; display:flex; justify-content:flex-end; padding:.25rem .25rem 0; }
   .nav-auth .btn{ min-height:40px; }
@@ -857,28 +804,26 @@ body{ overflow-x:hidden; }
 
 .table-scroll td[data-label="Detalle"]{ max-width: 320px; white-space: normal; }
 
-/* ===== Scroll horizontal para tablas (funciona con tu <div class="table-responsive">) */
 .table-responsive{
   width:100%;
   display:block;
-  overflow-x: auto !important;          /* <- fuerza barra horizontal */
+  overflow-x: auto !important;          
   -webkit-overflow-scrolling: touch;
-  scrollbar-gutter: stable both-edges;  /* mejor estilo de barra */
+  scrollbar-gutter: stable both-edges;
 }
 .table-responsive > table{
-  min-width: 880px;    /* súbelo/bájalo según tus columnas */
+  min-width: 880px;
   border-collapse: separate;
   border-spacing: 0;
 }
 .table-responsive th,
 .table-responsive td{
-  white-space: nowrap;                   /* evita que se encoja */
+  white-space: nowrap;                   
 }
 .table-responsive td[data-label="Detalle"]{
-  white-space: normal;                   /* solo el detalle puede partirse */
+  white-space: normal;                   
 }
 
-/* (Opcional) pista visual de que hay más contenido a la derecha */
 .table-responsive.scrollable::after{
   content: "desliza →";
   position: sticky;
@@ -904,7 +849,6 @@ body{ overflow-x:hidden; }
 .table-responsive th, .table-responsive td{ white-space: nowrap; }
 .table-responsive td[data-label="Detalle"]{ white-space: normal; }
 
-/* opcional: avisito “desliza →” cuando haya overflow */
 .table-responsive.scrollable::after{
   content: "desliza →";
   position: sticky; right: .25rem; bottom: .25rem;
@@ -913,25 +857,20 @@ body{ overflow-x:hidden; }
   padding:.15rem .45rem; box-shadow:0 2px 8px rgba(0,0,0,.06);
 }
 
-.table-responsive > table{ min-width: 960px; } /* o 1024px si tienes muchas columnas */
+.table-responsive > table{ min-width: 960px; }
 
 
-/*--------------------------------*/
-
-/* 📱 Ajuste catálogo en móviles */
 @media (max-width: 640px) {
-  /* 1) Cards más compactas y centradas */
   .product-card {
-    max-width: 280px;        /* ↓ tamaño del recuadro */
-    margin: 0 auto 16px;     /* centrado + separación */
+    max-width: 280px;
+    margin: 0 auto 16px;
     border-radius: 16px;
   }
 
-  /* 2) Imagen controlada (cuadrada y recortada) */
   .product-card .thumb {
     display: block;
     width: 100%;
-    aspect-ratio: 1 / 1;     /* hace el recuadro cuadrado */
+    aspect-ratio: 1 / 1;
     overflow: hidden;
     border-radius: 12px;
   }
@@ -939,45 +878,39 @@ body{ overflow-x:hidden; }
   .product-card img.thumb {
     width: 100%;
     height: 100%;
-    object-fit: cover;       /* evita que la imagen “estire” */
+    object-fit: cover;
     display: block;
   }
 
-  /* 3) Tipografías y paddings más pequeños */
   .product-card .card-body { padding: 12px; }
   .product-card .card-title { font-size: 1rem; }
   .product-card .muted { font-size: .9rem; }
 }
 
-/* 🧩 (Opcional) Si quieres 2 productos por fila en móviles */
 @media (max-width: 640px) {
   .grid.grid-3 {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
   }
-  /* Al usar 2 columnas, quita límite estricto para que fluya */
+
   .grid.grid-3 .product-card { max-width: none; margin: 0; }
 }
 
-/* ===== Paginación compacta (compatible con el marcado de Laravel) ===== */
 .pagination-compact {
   display: flex;
   justify-content: flex-end;
   margin-top: 8px;
 }
 
-/* El <nav> que renderiza links() */
 .pagination-compact nav[aria-label="Pagination Navigation"] {
   display: inline-flex;
   align-items: center;
   gap: 6px;
 }
 
-/* Oculta duplicados móviles de la plantilla tailwind de Laravel */
 .pagination-compact .hidden { display: none !important; }
 
-/* Botones (a / span) */
 .pagination-compact a,
 .pagination-compact span[aria-current="page"],
 .pagination-compact span.relative.inline-flex {
@@ -997,31 +930,26 @@ body{ overflow-x:hidden; }
   box-shadow: 0 1px 2px rgba(0,0,0,.04);
 }
 
-/* Página activa */
 .pagination-compact span[aria-current="page"] {
-  background: #1f2937; /* gris oscuro */
+  background: #1f2937;
   border-color: #1f2937;
   color: #fff;
   font-weight: 600;
 }
 
-/* Hover */
 .pagination-compact a:hover {
   background: #f6f6f6;
 }
 
-/* Deshabilitados (Anterior/Siguiente cuando no aplican) */
 .pagination-compact span[aria-disabled="true"] {
   opacity: .45;
   cursor: default;
 }
 
-/* Texto largo “Anterior / Siguiente” en línea con los números */
 .pagination-compact .inline-flex.items-center {
   padding: 0 12px;
 }
 
-/* Responsive: un pelín más chico en móviles */
 @media (max-width: 640px) {
   .pagination-compact a,
   .pagination-compact span[aria-current="page"],

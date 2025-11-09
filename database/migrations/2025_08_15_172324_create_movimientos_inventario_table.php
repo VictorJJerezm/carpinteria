@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('movimientos_inventario', function (Blueprint $table) {
             $table->bigIncrements('id_mov');
             $table->unsignedBigInteger('id_insumo');
-            $table->unsignedBigInteger('id_usuario')->nullable(); // quién realizó el movimiento
+            $table->unsignedBigInteger('id_usuario')->nullable(); // Usuario quién realizó el movimiento
             $table->string('tipo', 10); // Entrada | Salida
             $table->integer('cantidad');
             $table->decimal('costo_unitario', 12, 2)->default(0); // en entradas: costo compra; en salidas: costo aplicado (PMP)

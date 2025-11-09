@@ -17,7 +17,6 @@ return new class extends Migration {
             $t->text('etiquetas')->nullable();
             $t->text('notas')->nullable();
             $t->boolean('activo')->default(true);
-            // Sin timestamps
         });
     }
 

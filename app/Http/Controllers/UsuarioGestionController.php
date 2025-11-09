@@ -147,8 +147,6 @@ class UsuarioGestionController extends Controller
         return back()->with('ok','Usuario desactivado.');
     }
 
-    /** ===== Helpers de permisos granulares ===== */
-
     /** Roles que el usuario actual puede asignar */
     protected function rolesAsignables()
     {
@@ -174,7 +172,7 @@ class UsuarioGestionController extends Controller
             abort(403, 'No autorizado.');
         }
 
-        // Opcional: impedir que te quites el rol a ti mismo en edición
+        // Impedir que te quites el rol a ti mismo en edición
         if (!$me->esAdmin() && $me->id === $target->id && $forDelete) {
             abort(403, 'No puedes eliminarte a ti mismo.');
         }

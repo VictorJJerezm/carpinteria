@@ -2,16 +2,16 @@
   // helper de valores del producto
   $v = fn($campo, $def = '') => old($campo, isset($producto) ? $producto->{$campo} : $def);
 
-  // seleccionados (cuando editas) -> mapa por id_insumo
+  // seleccionados
   $seleccionados = isset($producto) ? $producto->materiales->keyBy('id_insumo') : collect();
 
-  // ids seleccionados (para reconstruir tras validación fallida o precargar en edición)
+  // ids seleccionados
   $seleccionadosIds = collect(old('materiales', $seleccionados->keys()->all()));
 
   // recargos tras validación fallida
   $recargosOld = old('recargos', []);
 
-  // recargos al editar (si no hay old)
+  // recargos al editar
   $recargosEdit = isset($producto)
       ? $producto->materiales->mapWithKeys(fn($m) => [$m->id_insumo => $m->pivot->recargo ?? 0])->all()
       : [];

@@ -116,10 +116,10 @@ class CotizacionController extends Controller
                 $p = Pedido::create([
                     'id_cotizacion' => $c->id_cotizacion,
                     'id_cliente'    => $c->id_cliente,
-                    'id_agente'     => $c->id_usuario, // quien respondió la cotización, si existe
-                    'total'         => $c->precio_final, // ← se conserva el precio aceptado
+                    'id_agente'     => $c->id_usuario, // quien respondió la cotización, si existe - VJ
+                    'total'         => $c->precio_final, // se conserva el precio aceptado - VJ
                     'estado'        => 'En proceso',
-                    // 'fecha' se setea por defecto a CURRENT_DATE
+                    // 'fecha' se setea por defecto a CURRENT_DATE - VJ
                 ]);
 
                 foreach ($c->detalles as $d) {
